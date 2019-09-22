@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_parent"
+    android:background="@drawable/fundol"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.android.books.BuscaActivity">
+
+    <!-- Card View for the user's search text and search button -->
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/card_view"
+        android:layout_width="@dimen/search_bar_width"
+        android:layout_height="@dimen/card_view_height"
+        android:layout_centerInParent="true"
+        app:cardUseCompatPadding="true">
+
+        <!-- Horizontal LinearLayout container for the text and the button -->
+        <LinearLayout
+            android:layout_width="@dimen/search_bar_width"
+            android:layout_height="match_parent">
+
+            <!-- Editable TextView for the user's search criteria -->
+            <EditText
+                android:id="@+id/entrada"
+                android:layout_width="@dimen/search_editable_text_width"
+                android:layout_height="match_parent"
+                android:background="@android:color/transparent"
+                android:hint="Buscar"
+                android:imeOptions="actionDone"
+                android:inputType="text"
+                android:maxLines="1"
+                android:padding="@dimen/min_dimension"/>
+
+            <!-- Button for the user to get the results for their search -->
+            <ImageButton
+                android:id="@+id/btn_buscar"
+                android:layout_width="@dimen/search_button_width"
+                android:layout_height="match_parent"
+                android:background="#ffffff"
+                android:contentDescription="@string/search_button_content_desc"
+                android:onClick="buscar"
+                android:scaleType="centerInside"
+                android:src="@drawable/searchh18px"/>
+
+        </LinearLayout>
+
+    </android.support.v7.widget.CardView>
+
+    <!-- TextView for the title of the search interface -->
+
+    <!-- Checkbox for searching book titles matching search text -->
+    <RadioGroup
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/card_view"
+        android:layout_centerInParent="true"
+        android:orientation="horizontal">
+
+        <RadioButton
+            android:id="@+id/title_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/min_dimension"
+            android:text="Titulo" />
+
+        <!-- Checkbox for searching book authors matching search text -->
+        <RadioButton
+            android:id="@+id/author_radio"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/min_dimension"
+            android:text="Autor" />
+
+        <!-- Checkbox for searching books based on ISBN of the book -->
+
+    </RadioGroup>
+
+    <ImageButton
+        android:id="@+id/btn_cadastro_livro"
+        android:layout_width="56dp"
+        android:layout_height="57dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="100dp"
+        android:layout_marginBottom="120dp"
+        android:background="@drawable/registrar"
+        android:contentDescription="@string/search_button_content_desc"
+        android:onClick="cadastroLivro" />
+
+    <ImageButton
+        android:id="@+id/btn_emprestimos"
+        android:layout_width="70dp"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="100dp"
+        android:layout_marginBottom="120dp"
+        android:background="@drawable/historico"
+        android:contentDescription="@string/search_button_content_desc"
+        android:cropToPadding="false"
+        android:onClick="buscar" />
+
+
+
+
+</RelativeLayout>
