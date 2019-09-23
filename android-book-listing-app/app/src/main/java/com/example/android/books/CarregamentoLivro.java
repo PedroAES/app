@@ -3,14 +3,16 @@ package com.example.android.books;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 
+import com.example.android.books.model.Book;
+
 import java.util.List;
 
-class BookLoader extends AsyncTaskLoader<List<Book>> {
+class CarregamentoLivro extends AsyncTaskLoader<List<Book>> {
 
 	private String mSearchUrl;
 	private List<Book> mData;
 
-	BookLoader(Context context, String url) {
+	public CarregamentoLivro(Context context, String url) {
 		super(context);
 		mSearchUrl = url;
 	}

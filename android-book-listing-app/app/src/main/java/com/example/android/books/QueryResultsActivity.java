@@ -15,6 +15,9 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
+import com.example.android.books.adapter.BookAdapter;
+import com.example.android.books.model.Book;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -36,7 +39,7 @@ public class QueryResultsActivity
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.lista_de_livros);
-		BookRecyclerView recyclerView = findViewById(R.id.recycler_view);
+		LivroRecyclerView recyclerView = findViewById(R.id.recycler_view);
 		recyclerView.setHasFixedSize(true);
 		int orientation = this.getResources().getConfiguration().orientation;
 		if (orientation == Configuration.ORIENTATION_PORTRAIT) {
@@ -81,7 +84,7 @@ public class QueryResultsActivity
 
 	@Override
 	public Loader<List<Book>> onCreateLoader(int id, Bundle args) {
-		return new BookLoader(QueryResultsActivity.this, REQUEST_URL);
+		return new CarregamentoLivro(QueryResultsActivity.this, REQUEST_URL);
 	}
 
 	@Override

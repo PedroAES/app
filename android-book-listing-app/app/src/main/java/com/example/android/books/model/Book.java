@@ -1,24 +1,24 @@
-package com.example.android.books;
+package com.example.android.books.model;
 
 public class Book{
 
-	Book(String titulo, String autor, float rating, float preco) {
+	public Book(String titulo, String autor, float rating, float preco) {
 		this.titulo = titulo;
 		this.autor = autor;
 		this.mRating = rating;
 		this.preco = preco;
 	}
 
-	String getTitulo() {
+	public String getTitulo() {
 		return titulo;
 	}
-	String getAutor() {
+	public String getAutor() {
 		return autor;
 	}
-	float getRating() {
+	public float getRating() {
 		return mRating;
 	}
-	float getPreco() {
+	public float getPreco() {
 		return preco;
 	}
 

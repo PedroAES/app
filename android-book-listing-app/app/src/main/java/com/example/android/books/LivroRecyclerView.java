@@ -9,7 +9,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.AdapterView;
 
-public class BookRecyclerView extends RecyclerView implements RecyclerView.OnItemTouchListener {
+public class LivroRecyclerView extends RecyclerView implements RecyclerView.OnItemTouchListener {
 
 	private View mEmptyView;
 	private AdapterView.OnItemClickListener mListener;
@@ -23,11 +23,11 @@ public class BookRecyclerView extends RecyclerView implements RecyclerView.OnIte
 		}
 	};
 
-	public BookRecyclerView(Context context, @Nullable AttributeSet attrs) {
+	public LivroRecyclerView(Context context, @Nullable AttributeSet attrs) {
 		super(context, attrs);
 	}
 
-	public BookRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
+	public LivroRecyclerView(Context context, @Nullable AttributeSet attrs, int defStyle) {
 		super(context, attrs, defStyle);
 	}
 
@@ -70,7 +70,7 @@ public class BookRecyclerView extends RecyclerView implements RecyclerView.OnIte
 		return false;
 	}
 
-	public BookRecyclerView(Context context, RecyclerView recyclerView, AdapterView.OnItemClickListener listener) {
+	public LivroRecyclerView(Context context, RecyclerView recyclerView, AdapterView.OnItemClickListener listener) {
 		super(context);
 		mListener = listener;
 		mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {

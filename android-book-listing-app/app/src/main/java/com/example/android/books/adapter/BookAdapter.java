@@ -1,4 +1,4 @@
-package com.example.android.books;
+package com.example.android.books.adapter;
 
 
 import android.graphics.Color;
@@ -12,22 +12,25 @@ import android.view.ViewGroup;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
+import com.example.android.books.R;
+import com.example.android.books.model.Book;
+
 import java.util.ArrayList;
 import java.util.List;
 
-class BookAdapter extends RecyclerView.Adapter<BookAdapter.CardViewHolder> {
+public class BookAdapter extends RecyclerView.Adapter<BookAdapter.CardViewHolder> {
 
 	private final String LOG_TAG = BookAdapter.class.getSimpleName();
 	private List<Book> listaLivros;
 
-	BookAdapter(List<Book> listaLivros) {
+	public BookAdapter(List<Book> listaLivros) {
 	    this.listaLivros = listaLivros;
 	}
 
 	@Override
 	public CardViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
 		View view = LayoutInflater.from(parent.getContext())
-				.inflate(R.layout.livro, parent, false);
+				.inflate( R.layout.livro, parent, false);
 
 		return new CardViewHolder(view);
 	}
@@ -62,10 +65,10 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.CardViewHolder> {
 		return listaLivros.size();
 	}
 
-	void clear() {
+	public void clear() {
 		listaLivros = new ArrayList<>();
 	}
-	void addAll(List<Book> data) {
+	public void addAll(List<Book> data) {
 
 		for (int i = 0; i < data.size(); i++) {
 			Book book = data.get(i);
@@ -74,7 +77,7 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.CardViewHolder> {
 		}
 	}
 
-	static class CardViewHolder extends RecyclerView.ViewHolder {
+	public static class CardViewHolder extends RecyclerView.ViewHolder {
 		TextView bookTitle;
 		TextView bookAuthor;
 		RatingBar bookRating;
