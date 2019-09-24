@@ -6,7 +6,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class RetrofitConfig {
 
     private static Retrofit retrofit = null;
-    private static String baseUrl= "http://127.0.0.1:8000/";
+    private static String baseUrl= "http://127.0.0.1:8080";
 
     public RetrofitConfig() {
         retrofit = new Retrofit.Builder()

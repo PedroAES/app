@@ -15,6 +15,9 @@ import com.example.android.books.model.TokenAuthentication;
 import com.example.android.books.model.Usuario;
 import com.example.android.books.retrofit.RetrofitConfig;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -81,20 +84,27 @@ public class LoginActivity extends AppCompatActivity {
     }
 	
 	public void fazerLogin(){
-        Call<TokenAuthentication> call = new RetrofitConfig().getLivroService().loginUsuario( usuario.getUsername(), usuario.getPassword() );
-        call.enqueue( new Callback<TokenAuthentication>() {
+        JSONObject paramObject = new JSONObject();
+        try {
+            paramObject.put("username", login.getUsername());
+            paramObject.put("password", login.getPassword());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Call<String> call = new RetrofitConfig().getLivroService().loginUsuario( paramObject.toString());
+        call.enqueue( new Callback<String>() {
             @Override
-            public void onResponse(Call<TokenAuthentication> call, Response<TokenAuthentication> response) {
+            public void onResponse(Call<String> call, Response<String> response) {
                 if(response.isSuccessful()){
-                    TokenAuthentication tokenAuthentication = response.body();
-                    Toast.makeText(getBaseContext(), tokenAuthentication.getToken(), Toast.LENGTH_SHORT).show();
+                    String token = response.body();
+                    Toast.makeText(getBaseContext(), token, Toast.LENGTH_SHORT).show();
                 }else{
                     Toast.makeText(getBaseContext(), "Erro na conexão", Toast.LENGTH_SHORT).show();
                 }
             }
 
             @Override
-            public void onFailure(Call<TokenAuthentication> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 Log.e("Token   ", "Erro ao buscar o token:" + t.getMessage());
             }
         } );

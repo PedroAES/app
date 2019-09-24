@@ -2,6 +2,7 @@ package com.example.android.books.retrofit;
 
 import com.example.android.books.model.Emprestimo;
 import com.example.android.books.model.Livro;
+import com.example.android.books.model.Login;
 import com.example.android.books.model.Sessao;
 import com.example.android.books.model.TokenAuthentication;
 import com.example.android.books.model.Usuario;
@@ -24,15 +25,14 @@ import retrofit2.http.Query;
 
 public interface LivroService {
 
-//    @Headers({
-//            "Accept: application/json",
-//            "Content-Type: application/json"
-//    })
+    @Headers({
+            "Accept: application/json",
+            "Content-Type: application/json"
+    })
 
     //USUARIOS
-    @FormUrlEncoded
     @POST("api-token-auth/")
-    Call<TokenAuthentication> loginUsuario(@Field( "username" ) String username, @Field( "password" ) String password);
+    Call<String> loginUsuario(@Body String body);
     @POST("logout/")
     Call<Usuario> logoutUsuario(@Body Usuario usuario);
     @GET("usuarios/{matricula}")
