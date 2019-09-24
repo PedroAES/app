@@ -6,7 +6,7 @@ import retrofit2.converter.jackson.JacksonConverterFactory;
 public class RetrofitConfig {
 
     private static Retrofit retrofit = null;
-    private static String baseUrl= "http://127.0.0.1:8080/";
+    private static String baseUrl= "http://127.0.0.1:8000/";
 
     public RetrofitConfig() {
         retrofit = new Retrofit.Builder()
@@ -14,4 +14,9 @@ public class RetrofitConfig {
                 .addConverterFactory( JacksonConverterFactory.create() )
                 .build();
     }
+	
+	public LivroService getLivroService() {
+        return retrofit.create( LivroService.class );
+    }
 }
+

@@ -18,12 +18,12 @@
         app:srcCompat="@drawable/white" />
 
     <EditText
-        android:id="@+id/etLoginEmail"
+        android:id="@+id/etLoginUserName"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="@android:color/white"
-        android:hint="E-mail"
+        android:hint="Username"
         android:inputType="textPersonName"
         android:padding="10dp" />
 
