@@ -63,40 +63,29 @@ public class BookRecyclerView extends RecyclerView implements RecyclerView.OnIte
 		View childView = rv.findChildViewUnder(e.getX(), e.getY());
 
 		if (childView != null && mListener != null && mGestureDetector.onTouchEvent(e)) {
-
 			return true;
 		}
 
 		return false;
 	}
 
-	public BookRecyclerView(Context context, RecyclerView recyclerView, AdapterView.OnItemClickListener listener) {
+	public BookRecyclerView(Context context, AdapterView.OnItemClickListener listener) {
 		super(context);
 		mListener = listener;
 		mGestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
 
 			@Override
 			public boolean onSingleTapUp(MotionEvent e) {
-
-
 				return true;
 			}
-
-			@Override
-			public void onLongPress(MotionEvent e) {
-				System.out.println("wsdasd");
-			}
-
 		});
 	}
 
 	@Override
 	public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
 	}
 
 	@Override
 	public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
 	}
 }

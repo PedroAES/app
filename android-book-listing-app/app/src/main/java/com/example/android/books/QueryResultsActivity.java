@@ -11,6 +11,8 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -36,8 +38,26 @@ public class QueryResultsActivity
 		super.onCreate(savedInstanceState);
 
 		setContentView(R.layout.lista_de_livros);
-		BookRecyclerView recyclerView = findViewById(R.id.recycler_view);
+		final BookRecyclerView recyclerView = findViewById(R.id.recycler_view);
 		recyclerView.setHasFixedSize(true);
+
+		recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
+			@Override
+			public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+				return true;
+			}
+
+			@Override
+			public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+				//Pega o objeto clicado e faz algo
+			}
+
+			@Override
+			public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+			}
+		});
+
 		int orientation = this.getResources().getConfiguration().orientation;
 		if (orientation == Configuration.ORIENTATION_PORTRAIT) {
 			recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
