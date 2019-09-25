@@ -5,13 +5,16 @@ public class Livro {
     private String codigo;
     private String titulo;
     private String autor;
-    private Sessao codigoSessao;
+    private String codigoSessao;
 
-    public Livro(String codigo, String titulo, String autor, Sessao codigoSessao) {
+    public Livro(String codigo, String titulo, String autor, String codigoSessao) {
         this.codigo = codigo;
         this.titulo = titulo;
         this.autor = autor;
         this.codigoSessao = codigoSessao;
+    }
+
+    public Livro() {
     }
 
     public String getCodigo() {
@@ -38,11 +41,11 @@ public class Livro {
         this.autor = autor;
     }
 
-    public Sessao getCodigoSessao() {
+    public String getCodigoSessao() {
         return codigoSessao;
     }
 
-    public void setCodigoSessao(Sessao codigoSessao) {
+    public void setCodigoSessao(String codigoSessao) {
         this.codigoSessao = codigoSessao;
     }
 

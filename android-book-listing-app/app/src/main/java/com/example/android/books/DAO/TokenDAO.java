@@ -21,6 +21,7 @@ public class TokenDAO implements IToken {
         ler = conexao.getReadableDatabase();
     }
 
+    @Override
     public void inserir(TokenAuthentication token, String username){
         ContentValues values = new ContentValues(  );
         values.put( "username", username );
@@ -45,7 +46,6 @@ public class TokenDAO implements IToken {
 
         return tokens;
     }
-
 
     private Conexao conexao;
     private SQLiteDatabase escrever;
