@@ -1,5 +1,6 @@
 package com.example.android.books.model;
 
+
 public class Usuario {
 
     private String username;

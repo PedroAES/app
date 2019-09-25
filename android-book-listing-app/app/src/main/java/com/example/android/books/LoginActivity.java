@@ -10,13 +10,12 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.example.android.books.model.Login;
+import com.example.android.books.DAO.TokenDAO;
 import com.example.android.books.model.TokenAuthentication;
 import com.example.android.books.model.Usuario;
 import com.example.android.books.retrofit.RetrofitConfig;
 
-import org.json.JSONException;
-import org.json.JSONObject;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,9 +31,11 @@ public class LoginActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         // Inflate the activity's UI
+        tokenDAO = new TokenDAO( this);
         setContentView(R.layout.login_activity);
         etUsername = findViewById(R.id.etLoginUserName);
         etSenha = findViewById(R.id.etLoginSenha);
+        verificarTokenBanco();
     }
 
     public void cadastrar(View view){
@@ -44,12 +45,22 @@ public class LoginActivity extends AppCompatActivity {
     public void login(View view){
         username = etUsername.getText().toString().toLowerCase().trim();
         senha = etSenha.getText().toString().trim();
-		
 		usuario = new Usuario(username, senha);
-		login = new Login( username, senha );
-        if(validarCampos())
-            fazerLogin();
-            //efetuarLogin();
+		if(validarCampos())
+		    efetuarLogin();
+    }
+
+    public void verificarTokenBanco(){
+        tokens= tokenDAO.getTokens();
+        if(tokens!= null){
+            for(TokenAuthentication t : tokens){
+                if(t.getStatus()==1){
+                    tokenAuthentication = new TokenAuthentication( t.getToken(),t.getUsername(),t.getStatus() );
+                    break;
+                }
+            }
+            telaBusca();
+        }
     }
 
     private void telaDeCarregamento() {
@@ -58,12 +69,6 @@ public class LoginActivity extends AppCompatActivity {
         pDialog.setIndeterminate(false);
         pDialog.setCancelable(false);
         pDialog.show();
-    }
-    private void efetuarLogin(){
-        telaDeCarregamento();
-        Intent i = new Intent(this, BuscaActivity.class);
-        startActivity(i);
-        finish();
     }
 
     private boolean validarCampos() {
@@ -82,34 +87,41 @@ public class LoginActivity extends AppCompatActivity {
 
         return true;
     }
-	
-	public void fazerLogin(){
-        JSONObject paramObject = new JSONObject();
-        try {
-            paramObject.put("username", login.getUsername());
-            paramObject.put("password", login.getPassword());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        Call<String> call = new RetrofitConfig().getLivroService().loginUsuario( paramObject.toString());
-        call.enqueue( new Callback<String>() {
+
+    public void telaBusca(){
+        Intent i = new Intent(getBaseContext(), BuscaActivity.class);
+        startActivity(i);
+        finish();
+    }
+
+	public void efetuarLogin(){
+        Call<TokenAuthentication> call = new RetrofitConfig().getLivroService().loginUsuario( usuario);
+        call.enqueue( new Callback<TokenAuthentication>() {
             @Override
-            public void onResponse(Call<String> call, Response<String> response) {
+            public void onResponse(Call<TokenAuthentication> call, Response<TokenAuthentication> response) {
                 if(response.isSuccessful()){
-                    String token = response.body();
-                    Toast.makeText(getBaseContext(), token, Toast.LENGTH_SHORT).show();
+                    tokenAuthentication = response.body();
+                    TokenAuthentication banco = tokenDAO.atualizarStatus( tokenAuthentication.getToken() );
+                    if(banco == null)
+                        tokenDAO.inserir( tokenAuthentication,username );
+                    else
+                        tokenAuthentication = banco;
+                    telaDeCarregamento();
+                    telaBusca();
                 }else{
                     Toast.makeText(getBaseContext(), "Erro na conexão", Toast.LENGTH_SHORT).show();
                 }
             }
-
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<TokenAuthentication> call, Throwable t) {
                 Log.e("Token   ", "Erro ao buscar o token:" + t.getMessage());
             }
         } );
 	}
-	
+
+    public TokenAuthentication getTokenAuthentication() {
+        return tokenAuthentication;
+    }
 
     private EditText etUsername;
     private EditText etSenha;
@@ -117,5 +129,7 @@ public class LoginActivity extends AppCompatActivity {
     private String senha;
     private ProgressDialog pDialog;
 	private Usuario usuario;
-	private Login login;
+	private TokenDAO tokenDAO;
+	private TokenAuthentication tokenAuthentication;
+	private List<TokenAuthentication> tokens;
 }

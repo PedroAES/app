@@ -5,6 +5,9 @@ public class Sessao {
     private String descricao;
     private String localizacao;
 
+    public Sessao() {
+    }
+
     public Sessao(String codigo, String descricao, String localizacao) {
         this.codigo = codigo;
         this.descricao = descricao;

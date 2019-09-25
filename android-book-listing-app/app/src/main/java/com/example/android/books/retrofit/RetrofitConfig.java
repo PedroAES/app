@@ -1,17 +1,17 @@
 package com.example.android.books.retrofit;
 
 import retrofit2.Retrofit;
-import retrofit2.converter.jackson.JacksonConverterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class RetrofitConfig {
 
     private static Retrofit retrofit = null;
-    private static String baseUrl= "http://127.0.0.1:8080";
+    private static String baseUrl= "http://192.168.15.5:8080/";
 
     public RetrofitConfig() {
         retrofit = new Retrofit.Builder()
                 .baseUrl( baseUrl )
-                .addConverterFactory( JacksonConverterFactory.create() )
+                .addConverterFactory( GsonConverterFactory.create()  )
                 .build();
     }
 	

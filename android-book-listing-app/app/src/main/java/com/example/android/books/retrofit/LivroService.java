@@ -2,7 +2,6 @@ package com.example.android.books.retrofit;
 
 import com.example.android.books.model.Emprestimo;
 import com.example.android.books.model.Livro;
-import com.example.android.books.model.Login;
 import com.example.android.books.model.Sessao;
 import com.example.android.books.model.TokenAuthentication;
 import com.example.android.books.model.Usuario;
@@ -10,17 +9,13 @@ import com.example.android.books.model.Usuario;
 import java.util.List;
 
 import retrofit2.Call;
-import retrofit2.Response;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
-import retrofit2.http.Field;
-import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
-import retrofit2.http.Path;
 import retrofit2.http.Query;
 
 public interface LivroService {
@@ -32,11 +27,11 @@ public interface LivroService {
 
     //USUARIOS
     @POST("api-token-auth/")
-    Call<String> loginUsuario(@Body String body);
+    Call<TokenAuthentication> loginUsuario(@Body Usuario usuario);
     @POST("logout/")
     Call<Usuario> logoutUsuario(@Body Usuario usuario);
     @GET("usuarios/{matricula}")
-    Call<Usuario> getLivro(@Header("Authorization") String token, @Body Usuario usuario, @Query("matricula") String matricula);
+    Call<Usuario> getUsuario(@Header("Authorization") String token,@Query("matricula") String matricula);
 
     //LIVROS
     @GET("livros/")
