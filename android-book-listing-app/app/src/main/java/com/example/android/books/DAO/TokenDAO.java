@@ -46,21 +46,6 @@ public class TokenDAO implements IToken {
         return tokens;
     }
 
-    @Override
-    public TokenAuthentication atualizarStatus(String token) {
-        String sql = "SELECT username, token, status from token where token = "+ token;
-        Cursor c = ler.rawQuery( sql, null );
-        if(c==null)
-            return null;
-        TokenAuthentication tokenAuthentication = new TokenAuthentication(  );
-        while(c.moveToNext()){
-            tokenAuthentication.setUsername( c.getString( c.getColumnIndex( "username" ) ));
-            tokenAuthentication.setToken( c.getString( c.getColumnIndex( "token" ) ) );
-            tokenAuthentication.setStatus( c.getInt( c.getColumnIndex( "status" ) ) );
-        }
-        return tokenAuthentication;
-    }
-
 
     private Conexao conexao;
     private SQLiteDatabase escrever;

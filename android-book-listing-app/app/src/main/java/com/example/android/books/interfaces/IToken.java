@@ -8,5 +8,4 @@ import java.util.List;
 public interface IToken {
     void inserir(TokenAuthentication token, String username);
     List<TokenAuthentication> getTokens();
-    TokenAuthentication atualizarStatus(String token);
 }

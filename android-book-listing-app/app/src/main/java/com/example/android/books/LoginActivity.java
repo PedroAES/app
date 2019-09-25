@@ -52,7 +52,7 @@ public class LoginActivity extends AppCompatActivity {
 
     public void verificarTokenBanco(){
         tokens= tokenDAO.getTokens();
-        if(tokens!= null){
+        if(tokens.size() > 0){
             for(TokenAuthentication t : tokens){
                 if(t.getStatus()==1){
                     tokenAuthentication = new TokenAuthentication( t.getToken(),t.getUsername(),t.getStatus() );
@@ -101,11 +101,15 @@ public class LoginActivity extends AppCompatActivity {
             public void onResponse(Call<TokenAuthentication> call, Response<TokenAuthentication> response) {
                 if(response.isSuccessful()){
                     tokenAuthentication = response.body();
-                    TokenAuthentication banco = tokenDAO.atualizarStatus( tokenAuthentication.getToken() );
-                    if(banco == null)
+                    boolean verifica = false;
+                    for(TokenAuthentication t: tokens)
+                        if(t.getToken().equalsIgnoreCase(tokenAuthentication.getToken())){
+                            tokenAuthentication = t;
+                            verifica = true;
+                            break;
+                        }
+                    if(!verifica)
                         tokenDAO.inserir( tokenAuthentication,username );
-                    else
-                        tokenAuthentication = banco;
                     telaDeCarregamento();
                     telaBusca();
                 }else{
