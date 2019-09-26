@@ -8,4 +8,5 @@ import java.util.List;
 public interface IToken {
     void inserir(TokenAuthentication token, String username);
     List<TokenAuthentication> getTokens();
+    String getTokenPorStatus();
 }

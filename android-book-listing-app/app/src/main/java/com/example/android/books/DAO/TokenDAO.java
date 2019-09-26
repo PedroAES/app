@@ -47,6 +47,20 @@ public class TokenDAO implements IToken {
         return tokens;
     }
 
+    @Override
+    public String getTokenPorStatus() {
+        String sql = "SELECT token FROM token where status=1;";
+        Cursor c = ler.rawQuery( sql, null );
+        if(c == null)
+            return null;
+        String token = null;
+        while(c.moveToNext())
+            token = c.getString( c.getColumnIndex( "token" ) );
+
+        return token;
+
+    }
+
     private Conexao conexao;
     private SQLiteDatabase escrever;
     private SQLiteDatabase ler;

@@ -33,7 +33,7 @@ public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.CardViewHold
         cardViewHolder.titulo.setText( livro.getTitulo() );
         cardViewHolder.autor.setText( livro.getAutor() );
         cardViewHolder.codigo.setText( livro.getCodigo() );
-        cardViewHolder.codigo_sessao.setText( livro.getCodigoSessao());
+        cardViewHolder.codigo_sessao.setText( livro.getCodigo_sessao());
     }
 
     @Override

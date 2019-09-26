@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
@@ -17,6 +18,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.books.DAO.LivroDAO;
+import com.example.android.books.DAO.TokenDAO;
 import com.example.android.books.model.Livro;
 import com.example.android.books.retrofit.RetrofitConfig;
 
@@ -32,6 +34,8 @@ public class BuscaActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.busca_activity);
+		tokenDAO = new TokenDAO( this);
+		livroDAO = new LivroDAO( this );
 		userBusca = findViewById(R.id.entrada);
 		final ImageButton buscar = findViewById(R.id.btn_buscar);
 		userBusca.setOnEditorActionListener(new EditText.OnEditorActionListener() {
@@ -42,11 +46,13 @@ public class BuscaActivity extends AppCompatActivity {
 
 					return true;
 				}
-
 				return false;
 			}
 		});
-		buscarLivros();
+
+		livros = livroDAO.getAllLivros();
+		if(livros.size() == 0)
+			buscarLivros();
 	}
 
 	public void buscar(View view) {
@@ -105,29 +111,30 @@ public class BuscaActivity extends AppCompatActivity {
 	}
 
 	public void buscarLivros(){
-		//buscar o token no banco com status igual a 1
-		//chamar login não pode
-		Call<List<Livro>> call= new RetrofitConfig().getLivroService().getLivros(loginActivity.getTokenAuthentication().getToken());
+		String token = tokenDAO.getTokenPorStatus();
+		Call<List<Livro>> call= new RetrofitConfig().getLivroService().getLivros( "Token " + token);
 		call.enqueue(new Callback<List<Livro>>() {
 			@Override
 			public void onResponse(Call<List<Livro>> call, Response<List<Livro>> response) {
 				if(response.isSuccessful()){
-					livros = response.body();
-					for(Livro livro: livros)
+					List<Livro> livros_api = response.body();
+					for(Livro livro: livros_api){
+						livros.add( livro );
 						livroDAO.inserirLivro(livro);
+					}
 				}
 			}
 
 			@Override
 			public void onFailure(Call<List<Livro>> call, Throwable t) {
-
+				Log.e("Livros ", "Erro na conexão:" + t.getMessage());
 			}
 		});
 	}
 
 	private EditText userBusca;
 	private LivroDAO livroDAO;
+	private TokenDAO tokenDAO;
 	private Livro livro;
 	private List<Livro> livros;
-	private LoginActivity loginActivity;
 }
