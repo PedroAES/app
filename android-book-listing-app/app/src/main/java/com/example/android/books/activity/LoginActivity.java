@@ -1,4 +1,4 @@
-package com.example.android.books;
+package com.example.android.books.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.example.android.books.DAO.TokenDAO;
+import com.example.android.books.R;
 import com.example.android.books.model.TokenAuthentication;
 import com.example.android.books.model.Usuario;
 import com.example.android.books.retrofit.RetrofitConfig;
@@ -25,12 +26,12 @@ public class LoginActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        // Initialize activity on main thread.
+        // Initialize com.example.android.books.activity on main thread.
         // Bundle holds previous state when re-initialized
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        // Inflate the activity's UI
+        // Inflate the com.example.android.books.activity's UI
         tokenDAO = new TokenDAO( this);
         setContentView(R.layout.login_activity);
         etUsername = findViewById(R.id.etLoginUserName);

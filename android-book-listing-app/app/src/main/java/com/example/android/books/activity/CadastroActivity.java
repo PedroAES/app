@@ -1,4 +1,4 @@
-package com.example.android.books;
+package com.example.android.books.activity;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+
+import com.example.android.books.R;
 
 public class CadastroActivity extends AppCompatActivity {
 

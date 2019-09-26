@@ -7,7 +7,7 @@
     android:background="@drawable/fundol"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.books.BuscaActivity">
+    tools:context="com.example.android.books.activity.BuscaActivity">
 
     <!-- Card View for the user's search text and search button -->
 

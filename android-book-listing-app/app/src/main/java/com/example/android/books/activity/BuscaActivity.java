@@ -1,4 +1,4 @@
-package com.example.android.books;
+package com.example.android.books.activity;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -13,15 +13,16 @@ import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.books.DAO.LivroDAO;
 import com.example.android.books.DAO.TokenDAO;
+import com.example.android.books.R;
 import com.example.android.books.model.Livro;
 import com.example.android.books.retrofit.RetrofitConfig;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -60,9 +61,12 @@ public class BuscaActivity extends AppCompatActivity {
 		String input = entrada.getText().toString();
 
 		if (!input.isEmpty()) {
+			List<Livro> lista= new ArrayList<>();
+			for(Livro livro: livros)
+				if(livro.getTitulo().equalsIgnoreCase(userBusca.getText().toString()));
+					lista.add(livro);
 
-
-			Toast.makeText(BuscaActivity.this, userBusca.getText(), Toast.LENGTH_SHORT).show();
+			Toast.makeText(BuscaActivity.this, "Quantidade: " + lista.size(), Toast.LENGTH_SHORT).show();
 //			Intent results = new Intent(BuscaActivity.this, QueryResultsActivity.class);
 //			results.putExtra("topic", userBusca.getText().toString().toLowerCase());
 //			startActivity(results);

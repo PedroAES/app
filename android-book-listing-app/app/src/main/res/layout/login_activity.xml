@@ -9,7 +9,7 @@
     android:gravity="center_vertical"
     android:orientation="vertical"
     android:padding="50dp"
-    tools:context="com.example.android.books.LoginActivity">
+    tools:context="com.example.android.books.activity.LoginActivity">
 
     <ImageView
         android:id="@+id/imageView"
