@@ -15,6 +15,7 @@
         <activity android:name=".CadastroActivity"/>
         <activity android:name=".CadastroLivroActivity"/>
         <activity android:name=".BuscaActivity"/>
+        <activity android:name=".LivrosActivity"/>
         <activity android:name=".LoginActivity">
 
             <intent-filter>

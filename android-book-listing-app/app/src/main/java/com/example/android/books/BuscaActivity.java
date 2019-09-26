@@ -43,9 +43,10 @@ public class BuscaActivity extends AppCompatActivity {
 		String input = entrada.getText().toString();
 
 		if (!input.isEmpty()) {
-			Intent results = new Intent(BuscaActivity.this, QueryResultsActivity.class);
-			results.putExtra("topic", userBusca.getText().toString().toLowerCase());
-			startActivity(results);
+//			Intent results = new Intent(BuscaActivity.this, LivrosActivity.class);
+//			results.putExtra("topic", userBusca.getText().toString().toLowerCase());
+//			startActivity(results);
+			startActivity(new Intent(this, LivrosActivity.class));
 
 		} else {
 			Toast.makeText(
@@ -89,6 +90,8 @@ public class BuscaActivity extends AppCompatActivity {
 	public void cadastroLivro(View view){
 		startActivity(new Intent(this, CadastroLivroActivity.class));
 	}
+
+
 
 	private EditText userBusca;
 }

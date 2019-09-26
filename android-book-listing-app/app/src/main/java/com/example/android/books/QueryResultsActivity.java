@@ -41,22 +41,6 @@ public class QueryResultsActivity
 		final BookRecyclerView recyclerView = findViewById(R.id.recycler_view);
 		recyclerView.setHasFixedSize(true);
 
-		recyclerView.addOnItemTouchListener(new RecyclerView.OnItemTouchListener() {
-			@Override
-			public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
-				return true;
-			}
-
-			@Override
-			public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-				//Pega o objeto clicado e faz algo
-			}
-
-			@Override
-			public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
-			}
-		});
 
 		int orientation = this.getResources().getConfiguration().orientation;
 		if (orientation == Configuration.ORIENTATION_PORTRAIT) {

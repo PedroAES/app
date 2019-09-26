@@ -13,13 +13,14 @@
         android:layout_height="match_parent">
 
         <!-- Front cover image of the book -->
-        <ImageView
+        <ImageButton
             android:id="@+id/front_cover_art_image_view"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:contentDescription="@string/book_cover_image"
             android:scaleType="fitXY"
-            android:src="@drawable/book_cover"/>
+            android:src="@drawable/book_cover"
+            android:onClick="meth"/>
 
         <!-- Title of the book -->
         <TextView

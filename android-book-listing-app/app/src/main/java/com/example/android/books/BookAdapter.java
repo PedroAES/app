@@ -74,6 +74,10 @@ class BookAdapter extends RecyclerView.Adapter<BookAdapter.CardViewHolder> {
 		}
 	}
 
+	public void meth(View view){
+
+	}
+
 	static class CardViewHolder extends RecyclerView.ViewHolder {
 		TextView bookTitle;
 		TextView bookAuthor;
