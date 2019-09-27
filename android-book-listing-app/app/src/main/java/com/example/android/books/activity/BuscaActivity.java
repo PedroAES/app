@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -11,14 +14,18 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.android.books.DAO.LivroDAO;
 import com.example.android.books.DAO.TokenDAO;
 import com.example.android.books.R;
+import com.example.android.books.adapter.LivroAdapter;
+import com.example.android.books.adapter.RecyclerItemClickListener;
 import com.example.android.books.model.Livro;
 import com.example.android.books.retrofit.RetrofitConfig;
 
@@ -38,6 +45,7 @@ public class BuscaActivity extends AppCompatActivity {
 		tokenDAO = new TokenDAO( this);
 		livroDAO = new LivroDAO( this );
 		userBusca = findViewById(R.id.entrada);
+		rv = (RecyclerView)findViewById( R.id.rv);
 		final ImageButton buscar = findViewById(R.id.btn_buscar);
 		userBusca.setOnEditorActionListener(new EditText.OnEditorActionListener() {
 			@Override
@@ -61,15 +69,10 @@ public class BuscaActivity extends AppCompatActivity {
 		String input = entrada.getText().toString();
 
 		if (!input.isEmpty()) {
-			List<Livro> lista= new ArrayList<>();
-			for(Livro livro: livros)
-				if(livro.getTitulo().equalsIgnoreCase(userBusca.getText().toString()));
-					lista.add(livro);
-
-			Toast.makeText(BuscaActivity.this, "Quantidade: " + lista.size(), Toast.LENGTH_SHORT).show();
-//			Intent results = new Intent(BuscaActivity.this, QueryResultsActivity.class);
-//			results.putExtra("topic", userBusca.getText().toString().toLowerCase());
-//			startActivity(results);
+			String titulo = userBusca.getText().toString();
+			Intent i = new Intent( this, ListarLivrosActivity.class );
+			i.putExtra( "titulo", titulo );
+			startActivity( i );
 
 		} else {
 			Toast.makeText(
@@ -140,5 +143,6 @@ public class BuscaActivity extends AppCompatActivity {
 	private LivroDAO livroDAO;
 	private TokenDAO tokenDAO;
 	private Livro livro;
-	private List<Livro> livros;
+	private ArrayList<Livro> livros;
+	private RecyclerView rv;
 }

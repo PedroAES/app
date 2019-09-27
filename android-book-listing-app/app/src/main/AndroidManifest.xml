@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.android.books">
-
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
 
     <application
         android:allowBackup="true"
@@ -12,15 +8,15 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name="com.example.android.books.activity.CadastroActivity"/>
-        <activity android:name="com.example.android.books.activity.CadastroLivroActivity"/>
-        <activity android:name="com.example.android.books.activity.BuscaActivity"/>
-        <activity android:name="com.example.android.books.activity.LoginActivity">
-
+        <activity android:name=".activity.ListarLivrosActivity"></activity>
+        <activity android:name=".activity.CadastroActivity" />
+        <activity android:name=".activity.CadastroLivroActivity" />
+        <activity android:name=".activity.BuscaActivity" />
+        <activity android:name=".activity.LoginActivity">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN"/>
+                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER"/>
+                <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
         <activity
@@ -28,9 +24,11 @@
             android:label="Results">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.example.android.books.activity.LoginActivity"/>
-
+                android:value="com.example.android.books.activity.LoginActivity" />
         </activity>
     </application>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+
+    <uses-permission android:name="android.permission.INTERNET" />
 
 </manifest>

@@ -30,12 +30,12 @@ public class LivroDAO implements ILivro {
     }
 
     @Override
-    public List<Livro> getAllLivros() {
+    public ArrayList<Livro> getAllLivros() {
         String sql= "select * from livro;";
         Cursor c = ler.rawQuery( sql , null);
         if(c == null)
             return null;
-        List<Livro> livros = new ArrayList<>();
+        ArrayList<Livro> livros = new ArrayList<>();
         while (c.moveToNext()){
             Livro livro = new Livro();
             livro.setTitulo(c.getString(c.getColumnIndex("titulo")));

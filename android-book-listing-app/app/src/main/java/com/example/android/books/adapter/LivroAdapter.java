@@ -3,10 +3,12 @@ package com.example.android.books.adapter;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.android.books.R;
 import com.example.android.books.model.Livro;
 
 import java.util.ArrayList;
@@ -22,7 +24,9 @@ public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.CardViewHold
     @NonNull
     @Override
     public LivroAdapter.CardViewHolder onCreateViewHolder(@NonNull ViewGroup viewGroup, int i) {
-        return null;
+        View v = LayoutInflater.from( viewGroup.getContext() ).inflate( R.layout.items_livros, viewGroup, false );
+
+        return new CardViewHolder( v );
     }
 
     @Override
@@ -32,8 +36,8 @@ public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.CardViewHold
 
         cardViewHolder.titulo.setText( livro.getTitulo() );
         cardViewHolder.autor.setText( livro.getAutor() );
-        cardViewHolder.codigo.setText( livro.getCodigo() );
-        cardViewHolder.codigo_sessao.setText( livro.getCodigo_sessao());
+//        cardViewHolder.codigo.setText( livro.getCodigo() );
+//        cardViewHolder.codigo_sessao.setText( livro.getCodigo_sessao());
     }
 
     @Override
@@ -48,14 +52,16 @@ public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.CardViewHold
 
     public static class CardViewHolder extends RecyclerView.ViewHolder{
         CardView cv;
-        TextView codigo;
         TextView titulo;
         TextView autor;
-        TextView codigo_sessao;
+//        TextView codigo;
+//        TextView codigo_sessao;
 
         public CardViewHolder(@NonNull View itemView) {
             super( itemView );
-
+            cv = (CardView)itemView.findViewById( R.id.cv );
+            titulo = (TextView)itemView.findViewById( R.id.titulo_livro );
+            autor = (TextView)itemView.findViewById( R.id.autor_livro );
 
         }
     }
