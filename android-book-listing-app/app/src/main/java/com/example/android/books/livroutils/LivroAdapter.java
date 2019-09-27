@@ -34,16 +34,22 @@ public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.LivroViewHol
     public void onBindViewHolder(LivroViewHolder holder , int position) {
         holder.titulo.setText(livros.get(position).getTitulo());
         holder.autor.setText(livros.get(position).getAutor());
+        holder.cod_livro.setText("Cód: "+livros.get(position).getCodLivro());
+        holder.cod_sessao.setText("Sessão: "+livros.get(position).getCodSessao());
     }
 
     public class LivroViewHolder extends RecyclerView.ViewHolder {
         public TextView titulo;
         public TextView autor;
+        public TextView cod_livro;
+        public TextView cod_sessao;
 
         public LivroViewHolder(View view) {
             super(view);
-            titulo = (TextView) view.findViewById(R.id.titulo);
-            autor = (TextView) view.findViewById(R.id.autor);
+            titulo = view.findViewById(R.id.titulo);
+            autor = view.findViewById(R.id.autor);
+            cod_livro = view.findViewById(R.id.livro_cod);
+            cod_sessao = view.findViewById(R.id.sessao_cod);
         }
     }
 }

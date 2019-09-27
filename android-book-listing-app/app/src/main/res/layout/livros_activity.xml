@@ -7,7 +7,7 @@
     android:paddingLeft="16dp"
     android:paddingRight="16dp"
     android:paddingTop="16dp"
-    android:background="@drawable/fundo"
+    android:background="@drawable/white_background"
     tools:context=".livroutils.LivrosActivity">
 
     <TextView
@@ -18,7 +18,7 @@
         android:gravity="center"
         android:text="Livros Disponíveis"
         android:textAllCaps="true"
-        android:textColor="@android:color/white"
+        android:textColor="@android:color/black"
         android:textSize="26sp"
         android:textStyle="bold" />
 
