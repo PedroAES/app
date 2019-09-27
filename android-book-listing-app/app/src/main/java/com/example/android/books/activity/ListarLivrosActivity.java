@@ -63,6 +63,25 @@ public class ListarLivrosActivity extends AppCompatActivity {
                         }
                     } )
             );
+            
+            /*
+            TESTA DESSA FORMA DEPOIS
+            
+            recyclerView.addOnItemTouchListener(new LivrosTouchListener(getApplicationContext(), recyclerView, new LivrosClickListener() {
+            @Override
+            public void onClick(View view, int indice) {
+                Toast.makeText(getApplicationContext(),
+                        livros.get(indice).getTitulo() + " de "  + livros.get(indice).getAutor()
+                        + " foi clicado!", Toast.LENGTH_SHORT).show();
+            }
+            @Override
+            public void onLongClick(View view, int indice) {
+                Toast.makeText(getApplicationContext(),
+                        livros.get(indice).getTitulo() + " de "  + livros.get(indice).getAutor()
+                                + " foi pressionado!", Toast.LENGTH_SHORT).show();
+            }
+        })); */        
+            
         }
 
     }
