@@ -1,4 +1,4 @@
-package com.example.android.books;
+package com.example.android.books.livroutils;
 
 import android.app.ProgressDialog;
 import android.os.Bundle;
@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+
+import com.example.android.books.R;
 
 public class CadastroLivroActivity extends AppCompatActivity {
     @Override
@@ -16,8 +18,8 @@ public class CadastroLivroActivity extends AppCompatActivity {
         setContentView(R.layout.livro_cadastro_activity);
 
         etCodigo = findViewById(R.id.codigo);
-        etTitulo = findViewById(R.id.titulo);
-        etAutor = findViewById(R.id.autor);
+        etTitulo = findViewById(R.id.cad_titulo);
+        etAutor = findViewById(R.id.cad_autor);
         etCodigoSessao = findViewById(R.id.codigo_sessao);
     }
 

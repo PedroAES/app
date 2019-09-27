@@ -1,10 +1,12 @@
-package com.example.android.books;
+package com.example.android.books.livroutils;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+
+import com.example.android.books.R;
 
 import java.util.List;
 
@@ -19,7 +21,7 @@ public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.LivroViewHol
     @Override
     public LivroViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
-                .inflate(R.layout.livro_row, parent, false);
+                .inflate(R.layout.livro, parent, false);
 
         return new LivroViewHolder(itemView);
     }
@@ -40,8 +42,8 @@ public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.LivroViewHol
 
         public LivroViewHolder(View view) {
             super(view);
-            titulo = (TextView) view.findViewById(R.id.ltitulo);
-            autor = (TextView) view.findViewById(R.id.lautor);
+            titulo = (TextView) view.findViewById(R.id.titulo);
+            autor = (TextView) view.findViewById(R.id.autor);
         }
     }
 }

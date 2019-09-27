@@ -8,7 +8,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="50dp"
-    tools:context="com.example.android.books.CadastroActivity">
+    tools:context="com.example.android.books.loginecadastro.CadastroActivity">
 
 
     <TextView
@@ -34,7 +34,7 @@
         android:padding="10dp" />
 
     <EditText
-        android:id="@+id/titulo"
+        android:id="@+id/cad_titulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
@@ -44,7 +44,7 @@
         android:padding="10dp" />
 
     <EditText
-        android:id="@+id/autor"
+        android:id="@+id/cad_autor"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="5dp"

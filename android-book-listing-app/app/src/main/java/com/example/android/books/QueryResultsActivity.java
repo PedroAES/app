@@ -11,8 +11,6 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -37,8 +35,8 @@ public class QueryResultsActivity
 	protected void onCreate(@Nullable Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 
-		setContentView(R.layout.lista_de_livros);
-		final BookRecyclerView recyclerView = findViewById(R.id.recycler_view);
+		setContentView(R.layout.xlista_de_livros);
+		final BookRecyclerView recyclerView = findViewById(R.id.xrecycler_view);
 		recyclerView.setHasFixedSize(true);
 
 

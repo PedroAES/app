@@ -1,4 +1,4 @@
-package com.example.android.books;
+package com.example.android.books.livroutils;
 
 public class Livro {
     private String titulo;
