@@ -24,14 +24,6 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".QueryResultsActivity"
-            android:label="Results">
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value=".loginecadastro.LoginActivity"/>
-
-        </activity>
     </application>
 
 </manifest>
