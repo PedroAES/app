@@ -6,6 +6,7 @@ import com.example.android.books.model.Sessao;
 import com.example.android.books.model.TokenAuthentication;
 import com.example.android.books.model.Usuario;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -32,6 +33,8 @@ public interface LivroService {
     Call<Usuario> logoutUsuario(@Body Usuario usuario);
     @GET("usuarios/{matricula}")
     Call<Usuario> getUsuario(@Header("Authorization") String token,@Query("matricula") String matricula);
+    @GET("usuarios/")
+    Call<List<Usuario>> getUsuarios();
 
     //LIVROS
     @GET("livros/")

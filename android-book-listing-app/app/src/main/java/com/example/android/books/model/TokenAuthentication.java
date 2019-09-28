@@ -8,15 +8,17 @@ public class TokenAuthentication {
     @Expose
     private String token;
     private String username;
+    private String matricula;
     private int status;
 
     public TokenAuthentication() {
     }
 
-    public TokenAuthentication(String token, String username, int status) {
+    public TokenAuthentication(String token, String username, int status, String matricula) {
         this.token = token;
         this.username = username;
         this.status = status;
+        this.matricula = matricula;
     }
 
     public TokenAuthentication(String token) {
@@ -45,5 +47,13 @@ public class TokenAuthentication {
 
     public String getToken() {
         return token;
+    }
+
+    public String getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(String matricula) {
+        this.matricula = matricula;
     }
 }

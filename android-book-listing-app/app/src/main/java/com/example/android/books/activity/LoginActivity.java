@@ -16,6 +16,7 @@ import com.example.android.books.model.TokenAuthentication;
 import com.example.android.books.model.Usuario;
 import com.example.android.books.retrofit.RetrofitConfig;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -37,6 +38,7 @@ public class LoginActivity extends AppCompatActivity {
         etUsername = findViewById(R.id.etLoginUserName);
         etSenha = findViewById(R.id.etLoginSenha);
         verificarTokenBanco();
+        getUsuarios();
     }
 
     public void cadastrar(View view){
@@ -46,9 +48,17 @@ public class LoginActivity extends AppCompatActivity {
     public void login(View view){
         username = etUsername.getText().toString().toLowerCase().trim();
         senha = etSenha.getText().toString().trim();
+        String matricula = null;
 		usuario = new Usuario(username, senha);
-		if(validarCampos())
-		    efetuarLogin();
+		if(validarCampos()){
+		    for(Usuario us : usuarios){
+		        if(username.equalsIgnoreCase( us.getUsername() ))
+		            matricula = us.getMatricula();
+            }
+		    efetuarLogin(matricula);
+            telaDeCarregamento();
+            telaBusca();
+        }
     }
 
     public void verificarTokenBanco(){
@@ -56,7 +66,7 @@ public class LoginActivity extends AppCompatActivity {
         if(tokens.size() > 0){
             for(TokenAuthentication t : tokens){
                 if(t.getStatus()==1){
-                    tokenAuthentication = new TokenAuthentication( t.getToken(),t.getUsername(),t.getStatus() );
+                    tokenAuthentication = new TokenAuthentication( t.getToken(),t.getUsername(),t.getStatus(), t.getMatricula() );
                     break;
                 }
             }
@@ -95,37 +105,52 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-	public void efetuarLogin(){
-        Call<TokenAuthentication> call = new RetrofitConfig().getLivroService().loginUsuario( usuario);
+	public void efetuarLogin(final String matricula) {
+        Call<TokenAuthentication> call = new RetrofitConfig().getLivroService().loginUsuario( usuario );
         call.enqueue( new Callback<TokenAuthentication>() {
             @Override
             public void onResponse(Call<TokenAuthentication> call, Response<TokenAuthentication> response) {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     tokenAuthentication = response.body();
                     boolean verifica = false;
-                    for(TokenAuthentication t: tokens)
-                        if(t.getToken().equalsIgnoreCase(tokenAuthentication.getToken())){
+                    for (TokenAuthentication t : tokens)
+                        if (t.getToken().equalsIgnoreCase( tokenAuthentication.getToken() )) {
                             tokenAuthentication = t;
                             verifica = true;
                             break;
                         }
-                    if(!verifica)
-                        tokenDAO.inserir( tokenAuthentication,username );
+                    if (!verifica)
+                        tokenDAO.inserir( tokenAuthentication, username, matricula );
                     telaDeCarregamento();
                     telaBusca();
-                }else{
-                    Toast.makeText(getBaseContext(), "Erro na conexão", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText( getBaseContext(), "Erro na conexão", Toast.LENGTH_SHORT ).show();
                 }
             }
+
             @Override
             public void onFailure(Call<TokenAuthentication> call, Throwable t) {
+                Log.e( "Token   ", "Erro ao buscar o token:" + t.getMessage() );
+            }
+        } );
+    }
+
+    public void getUsuarios() {
+        Call<List<Usuario>> call = new RetrofitConfig().getLivroService().getUsuarios();
+        call.enqueue( new Callback<List<Usuario>>() {
+            @Override
+            public void onResponse(Call<List<Usuario>> call, Response<List<Usuario>> response) {
+                if(response.isSuccessful()){
+                    usuarios = response.body();
+                }else
+                    Toast.makeText(getBaseContext(), "Erro para buscar usuários", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<List<Usuario>> call, Throwable t) {
                 Log.e("Token   ", "Erro ao buscar o token:" + t.getMessage());
             }
         } );
-	}
-
-    public TokenAuthentication getTokenAuthentication() {
-        return tokenAuthentication;
     }
 
     private EditText etUsername;
@@ -136,5 +161,7 @@ public class LoginActivity extends AppCompatActivity {
 	private Usuario usuario;
 	private TokenDAO tokenDAO;
 	private TokenAuthentication tokenAuthentication;
-	private List<TokenAuthentication> tokens;
+	private ArrayList<TokenAuthentication> tokens;
+	private List<Usuario> usuarios;
+
 }

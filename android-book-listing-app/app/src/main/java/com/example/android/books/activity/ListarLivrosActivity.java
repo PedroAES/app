@@ -6,14 +6,15 @@ import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.android.books.DAO.LivroDAO;
+import com.example.android.books.DAO.TokenDAO;
 import com.example.android.books.R;
 import com.example.android.books.adapter.LivroAdapter;
-import com.example.android.books.adapter.RecyclerItemClickListener;
+import com.example.android.books.adapter.LivrosTouchListener;
+import com.example.android.books.interfaces.ILivrosClickListener;
 import com.example.android.books.model.Livro;
 
 import java.util.ArrayList;
@@ -26,67 +27,47 @@ public class ListarLivrosActivity extends AppCompatActivity {
         super.onCreate( savedInstanceState );
         setContentView( R.layout.activity_listar_livros );
         livroDAO = new LivroDAO( this );
+        tokenDAO = new TokenDAO( this);
         rv = (RecyclerView)findViewById( R.id.rv);
+
         String titulo = getIntent().getStringExtra( "titulo" );
+        livrosTotal = (List<Livro>) getIntent().getSerializableExtra( "lista" );
 
-        livros = livroDAO.getAllLivros();
-        ArrayList<Livro> lista= new ArrayList<>();
-        for(Livro livro: livros){
+        for(Livro livro: livrosTotal)
             if(titulo.equalsIgnoreCase( livro.getTitulo() ))
-                lista.add(livro);
-        }
+                livrosEscolhido.add( livro );
 
-        if(lista.size() == 0)
+        if(livrosEscolhido.size() == 0)
             Toast.makeText(ListarLivrosActivity.this, "Não há livros com esse título.", Toast.LENGTH_SHORT).show();
         else{
-            LivroAdapter adapter = new LivroAdapter( lista );
+            LivroAdapter adapter = new LivroAdapter( livrosEscolhido );
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager( this );
             rv.setLayoutManager( layoutManager );
             rv.setHasFixedSize( true );
             rv.addItemDecoration( new DividerItemDecoration( this, LinearLayout.VERTICAL ) );
             rv.setAdapter( adapter );
-            rv.addOnItemTouchListener(
-                    new RecyclerItemClickListener( getBaseContext(), rv, new RecyclerItemClickListener.OnItemClickListener() {
-                        @Override
-                        public void onItemClick(View view, int position) {
-                            Toast.makeText( ListarLivrosActivity.this, "position" + position, Toast.LENGTH_SHORT).show();
-                        }
-
-                        @Override
-                        public void onLongItemClick(View view, int position) {
-
-                        }
-
-                        @Override
-                        public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-
-                        }
-                    } )
-            );
-            
-            /*
-            TESTA DESSA FORMA DEPOIS
-            
-            recyclerView.addOnItemTouchListener(new LivrosTouchListener(getApplicationContext(), recyclerView, new LivrosClickListener() {
+            rv.addOnItemTouchListener(new LivrosTouchListener(getApplicationContext(), rv, new ILivrosClickListener() {
             @Override
             public void onClick(View view, int indice) {
                 Toast.makeText(getApplicationContext(),
-                        livros.get(indice).getTitulo() + " de "  + livros.get(indice).getAutor()
+                        livrosEscolhido.get(indice).getTitulo() + " de "  + livrosEscolhido.get(indice).getAutor()
                         + " foi clicado!", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onLongClick(View view, int indice) {
                 Toast.makeText(getApplicationContext(),
-                        livros.get(indice).getTitulo() + " de "  + livros.get(indice).getAutor()
+                        livrosEscolhido.get(indice).getTitulo() + " de "  + livrosEscolhido.get(indice).getAutor()
                                 + " foi pressionado!", Toast.LENGTH_SHORT).show();
             }
-        })); */        
+        }));
             
         }
 
     }
 
-    private ArrayList<Livro> livros;
+    private TokenDAO tokenDAO;
+    private List<Livro> livrosTotal;
+    private List<Livro> livrosEscolhido = new ArrayList<>(  );
     private RecyclerView rv;
     private LivroDAO livroDAO;
 }

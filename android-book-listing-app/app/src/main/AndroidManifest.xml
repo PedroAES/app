@@ -8,9 +8,9 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".activity.ListarLivrosActivity"></activity>
         <activity android:name=".activity.CadastroActivity" />
         <activity android:name=".activity.CadastroLivroActivity" />
+        <activity android:name=".activity.ListarLivrosActivity"/>
         <activity android:name=".activity.BuscaActivity" />
         <activity android:name=".activity.LoginActivity">
             <intent-filter>

@@ -12,12 +12,13 @@ import com.example.android.books.R;
 import com.example.android.books.model.Livro;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.CardViewHolder>{
 
-    private ArrayList<Livro> livros;
+    private List<Livro> livros;
 
-    public LivroAdapter(ArrayList<Livro> livros) {
+    public LivroAdapter(List<Livro> livros) {
         this.livros = livros;
     }
 
@@ -36,8 +37,8 @@ public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.CardViewHold
 
         cardViewHolder.titulo.setText( livro.getTitulo() );
         cardViewHolder.autor.setText( livro.getAutor() );
-//        cardViewHolder.codigo.setText( livro.getCodigo() );
-//        cardViewHolder.codigo_sessao.setText( livro.getCodigo_sessao());
+        cardViewHolder.codigo.setText("Cód: "+ livro.getCodigo() );
+        cardViewHolder.codigo_sessao.setText( "Sessão: "+ livro.getCodigo_sessao());
     }
 
     @Override
@@ -51,17 +52,19 @@ public class LivroAdapter extends RecyclerView.Adapter<LivroAdapter.CardViewHold
     }
 
     public static class CardViewHolder extends RecyclerView.ViewHolder{
-        CardView cv;
+//        CardView cv;
         TextView titulo;
         TextView autor;
-//        TextView codigo;
-//        TextView codigo_sessao;
+        TextView codigo;
+        TextView codigo_sessao;
 
         public CardViewHolder(@NonNull View itemView) {
             super( itemView );
-            cv = (CardView)itemView.findViewById( R.id.cv );
-            titulo = (TextView)itemView.findViewById( R.id.titulo_livro );
-            autor = (TextView)itemView.findViewById( R.id.autor_livro );
+//            cv = (CardView)itemView.findViewById( R.id.cv );
+            titulo = (TextView)itemView.findViewById( R.id.titulo );
+            autor = (TextView)itemView.findViewById( R.id.autor);
+            codigo = (TextView)itemView.findViewById( R.id.livro_cod );
+            codigo_sessao = (TextView)itemView.findViewById( R.id.sessao_cod );
 
         }
     }

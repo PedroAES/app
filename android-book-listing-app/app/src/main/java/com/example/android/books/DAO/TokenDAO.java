@@ -22,23 +22,25 @@ public class TokenDAO implements IToken {
     }
 
     @Override
-    public void inserir(TokenAuthentication token, String username){
+    public void inserir(TokenAuthentication token, String username, String matricula){
         ContentValues values = new ContentValues(  );
         values.put( "username", username );
+        values.put( "matricula", matricula );
         values.put( "token", token.getToken() );
         values.put( "status", 1 );
         escrever.insert( "token", null, values );
     }
 
     @Override
-    public List<TokenAuthentication> getTokens() {
-        List<TokenAuthentication> tokens = new ArrayList<>(  );
+    public ArrayList<TokenAuthentication> getTokens() {
+        ArrayList<TokenAuthentication> tokens = new ArrayList<>(  );
         String sql = "SELECT * FROM " + Conexao.TABELA_TOKEN +" ;";
         Cursor c = ler.rawQuery( sql , null);
 
         while (c.moveToNext()){
             TokenAuthentication token = new TokenAuthentication(  );
             token.setUsername( c.getString( c.getColumnIndex( "username" ) ));
+            token.setToken( c.getString( c.getColumnIndex( "matricula" ) ) );
             token.setToken( c.getString( c.getColumnIndex( "token" ) ) );
             token.setStatus( c.getInt( c.getColumnIndex( "status" ) ) );
             tokens.add( token );

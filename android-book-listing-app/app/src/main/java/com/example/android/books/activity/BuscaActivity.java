@@ -4,9 +4,6 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -14,22 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.android.books.DAO.LivroDAO;
 import com.example.android.books.DAO.TokenDAO;
 import com.example.android.books.R;
-import com.example.android.books.adapter.LivroAdapter;
-import com.example.android.books.adapter.RecyclerItemClickListener;
 import com.example.android.books.model.Livro;
 import com.example.android.books.retrofit.RetrofitConfig;
 
-import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.List;
 
 import retrofit2.Call;
@@ -42,10 +34,8 @@ public class BuscaActivity extends AppCompatActivity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.busca_activity);
-		tokenDAO = new TokenDAO( this);
-		livroDAO = new LivroDAO( this );
 		userBusca = findViewById(R.id.entrada);
-		rv = (RecyclerView)findViewById( R.id.rv);
+        tokenDAO = new TokenDAO( this);
 		final ImageButton buscar = findViewById(R.id.btn_buscar);
 		userBusca.setOnEditorActionListener(new EditText.OnEditorActionListener() {
 			@Override
@@ -58,10 +48,7 @@ public class BuscaActivity extends AppCompatActivity {
 				return false;
 			}
 		});
-
-		livros = livroDAO.getAllLivros();
-		if(livros.size() == 0)
-			buscarLivros();
+        buscarLivros();
 	}
 
 	public void buscar(View view) {
@@ -72,6 +59,7 @@ public class BuscaActivity extends AppCompatActivity {
 			String titulo = userBusca.getText().toString();
 			Intent i = new Intent( this, ListarLivrosActivity.class );
 			i.putExtra( "titulo", titulo );
+			i.putExtra( "lista", (Serializable) teste );
 			startActivity( i );
 
 		} else {
@@ -125,10 +113,7 @@ public class BuscaActivity extends AppCompatActivity {
 			public void onResponse(Call<List<Livro>> call, Response<List<Livro>> response) {
 				if(response.isSuccessful()){
 					List<Livro> livros_api = response.body();
-					for(Livro livro: livros_api){
-						livros.add( livro );
-						livroDAO.inserirLivro(livro);
-					}
+					teste = livros_api;
 				}
 			}
 
@@ -140,9 +125,6 @@ public class BuscaActivity extends AppCompatActivity {
 	}
 
 	private EditText userBusca;
-	private LivroDAO livroDAO;
-	private TokenDAO tokenDAO;
-	private Livro livro;
-	private ArrayList<Livro> livros;
-	private RecyclerView rv;
+    private TokenDAO tokenDAO;
+    private List<Livro> teste;
 }

@@ -21,7 +21,7 @@ public class Conexao extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        String sql_token= "create table IF NOT EXISTS "+ TABELA_TOKEN + " (username text primary key, " +
+        String sql_token= "create table IF NOT EXISTS "+ TABELA_TOKEN + " (username text primary key, matricula text not null, " +
                 "token text not null, status integer default 0);";
         String sql_usuario= "create table IF NOT EXISTS "+ TABELA_USUARIO + " (matricula text primary key , username text not null, " +
                 "password text not null, endereco text not null, telefone text not null);";
