@@ -34,7 +34,8 @@ public class ListarLivrosActivity extends AppCompatActivity {
         livrosTotal = (List<Livro>) getIntent().getSerializableExtra( "lista" );
 
         for(Livro livro: livrosTotal)
-            if(titulo.equalsIgnoreCase( livro.getTitulo() ))
+            //if(titulo.equalsIgnoreCase( livro.getTitulo() ))
+            if(livro.getTitulo().toLowerCase().contains(titulo.toLowerCase()))
                 livrosEscolhido.add( livro );
 
         if(livrosEscolhido.size() == 0)
