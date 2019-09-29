@@ -1,5 +1,7 @@
 package com.example.android.books.activity;
 
+import android.content.DialogInterface;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
@@ -33,13 +35,15 @@ public class ListarLivrosActivity extends AppCompatActivity {
         String titulo = getIntent().getStringExtra( "titulo" );
         livrosTotal = (List<Livro>) getIntent().getSerializableExtra( "lista" );
 
-        for(Livro livro: livrosTotal)
-            //if(titulo.equalsIgnoreCase( livro.getTitulo() ))
-            if(livro.getTitulo().toLowerCase().contains(titulo.toLowerCase()))
-                livrosEscolhido.add( livro );
+        if(titulo != null){
+            for(Livro livro: livrosTotal)
+                if(livro.getTitulo().toLowerCase().contains(titulo.toLowerCase()))
+                    livrosEscolhido.add( livro );
+        }else //n tendo nada no edite, mostra todos os livros
+            livrosEscolhido = livrosTotal;
 
         if(livrosEscolhido.size() == 0)
-            Toast.makeText(ListarLivrosActivity.this, "Não há livros com esse título.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(ListarLivrosActivity.this, "Não há livros no acervo.", Toast.LENGTH_SHORT).show();
         else{
             LivroAdapter adapter = new LivroAdapter( livrosEscolhido );
             RecyclerView.LayoutManager layoutManager = new LinearLayoutManager( this );
@@ -50,9 +54,10 @@ public class ListarLivrosActivity extends AppCompatActivity {
             rv.addOnItemTouchListener(new LivrosTouchListener(getApplicationContext(), rv, new ILivrosClickListener() {
             @Override
             public void onClick(View view, int indice) {
-                Toast.makeText(getApplicationContext(),
-                        livrosEscolhido.get(indice).getTitulo() + " de "  + livrosEscolhido.get(indice).getAutor()
-                        + " foi clicado!", Toast.LENGTH_SHORT).show();
+                confirmarAluguel(indice);
+//                Toast.makeText(getApplicationContext(),
+//                        livrosEscolhido.get(indice).getTitulo() + " de "  + livrosEscolhido.get(indice).getAutor()
+//                        + " foi clicado!", Toast.LENGTH_SHORT).show();
             }
             @Override
             public void onLongClick(View view, int indice) {
@@ -61,9 +66,28 @@ public class ListarLivrosActivity extends AppCompatActivity {
                                 + " foi pressionado!", Toast.LENGTH_SHORT).show();
             }
         }));
-            
         }
+    }
 
+    public void confirmarAluguel(final int indice){
+        new AlertDialog.Builder(this)
+                .setTitle( "Empréstimo" )
+                .setMessage( "Deseja fazer o empréstimo do livro "+ livrosEscolhido.get( indice ).getTitulo()+ " ?" )
+                .setPositiveButton( "Sim", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        Livro livro = livrosEscolhido.get( indice );
+                        //pegar a matricula do usuário na tabela do token
+                        //pegar a data do sistema do dia e da devolução
+                    }
+                } )
+                .setNegativeButton( "Não", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                    }
+                } )
+                .show();
     }
 
     private TokenDAO tokenDAO;

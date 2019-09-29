@@ -35,10 +35,14 @@ public interface LivroService {
     Call<Usuario> getUsuario(@Header("Authorization") String token,@Query("matricula") String matricula);
     @GET("usuarios/")
     Call<List<Usuario>> getUsuarios();
+    @POST("usuarios/")
+    Call<Usuario> addUsuarios(@Body Usuario usuario);
 
     //LIVROS
     @GET("livros/")
     Call<List<Livro>> getLivros(@Header("Authorization") String token);
+    @POST("livros/")
+    Call<Livro> addLivros(@Header("Authorization") String token, @Body Livro livro);
     @GET("livros/{codigo}")
     Call<Livro> getLivro(@Header("Authorization") String token,@Body Livro livro,@Query("codigo") String codigo);
     @PUT("livros/{codigo}")
@@ -49,6 +53,8 @@ public interface LivroService {
     //EMPRESTIMOS
     @GET("emprestimos/")
     Call<List<Emprestimo>> getEmprestimos(@Header("Authorization") String token);
+    @POST("emprestimos/")
+    Call<Emprestimo> addEmprestimos(@Header("Authorization") String token,@Body Emprestimo emprestimo);
     @GET("emprestimos/{codigo}")
     Call<Emprestimo> getEmprestimo(@Header("Authorization") String token,@Body Emprestimo emprestimo,@Query("codigo") String codigo);
     @PUT("emprestimos/{codigo}")
