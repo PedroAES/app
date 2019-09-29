@@ -9,7 +9,7 @@ public class Emprestimo {
     private String matriculaUsuario;
     private String dataEmprestimo;
     private String dataDevolucao;
-    private List<Livro> emprestimos;
+    private List<String> emprestimos;
 
     public Emprestimo(String codigo, String matriculaUsuario, String dataEmprestimo, String dataDevolucao) {
         this.codigo = codigo;
@@ -51,11 +51,11 @@ public class Emprestimo {
         this.dataDevolucao = dataDevolucao;
     }
 
-    public List<Livro> getEmprestimos() {
+    public List<String> getEmprestimos() {
         return emprestimos;
     }
 
-    public void setEmprestimos(Livro livro) {
-        this.emprestimos.add( livro );
+    public void setEmprestimos(String titulo) {
+        this.emprestimos.add( titulo );
     }
 }
