@@ -73,5 +73,5 @@
         android:background="@drawable/historico"
         android:contentDescription="@string/search_button_content_desc"
         android:cropToPadding="false"
-        android:onClick="buscar" />
+        android:onClick="listarEmprestimos" />
 </RelativeLayout>

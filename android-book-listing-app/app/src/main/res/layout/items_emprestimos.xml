@@ -10,54 +10,55 @@
     android:clickable="true"
     android:orientation="vertical">
 
-    <ImageView
-        android:id="@+id/image"
-        android:background = "@drawable/book_black"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_marginRight="10dp" />
-
     <LinearLayout
         android:id="@+id/dados"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_toRightOf="@+id/image"
         android:layout_marginLeft="7dp"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/titulo"
+            android:id="@+id/cod_emprestimo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:textSize="20sp"
+            android:layout_marginBottom="3dp"
+            android:textSize="16sp"
             android:textColor="@android:color/black"/>
 
         <TextView
-            android:id="@+id/autor"
+            android:id="@+id/titulo_emprestimo"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="5dp"
             android:textSize="15sp"
             android:textColor="@android:color/black"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/dados"
+             android:layout_below="@+id/dados"
             android:layout_toRightOf="@+id/image"
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/sessao_cod"
+                android:id="@+id/data_final"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10sp"
-                android:layout_toRightOf="@id/livro_cod"
+                android:layout_toRightOf="@id/hifen"
                 android:textColor="@android:color/black"/>
 
             <TextView
-                android:id="@+id/livro_cod"
+                android:id="@+id/hifen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="10sp"
+                android:text=" - "
+                android:layout_toRightOf="@id/data_inicial"
+                android:textColor="@android:color/black"/>
+
+            <TextView
+                android:id="@+id/data_inicial"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="10sp"

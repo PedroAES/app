@@ -93,6 +93,10 @@ public class BuscaActivity extends AppCompatActivity {
 		startActivity(new Intent(this, CadastroLivroActivity.class));
 	}
 
+	public void listarEmprestimos(View view){
+		startActivity(new Intent(this,ListarEmprestimosActivity.class));
+	}
+
 
 
 	private EditText userBusca;
