@@ -102,3 +102,91 @@ public class LivroRecyclerView extends RecyclerView implements RecyclerView.OnIt
 
 	}
 }
+
+
+/* AQUI FUNCIONOU SEM PRECISAR DO EXTENDS, VEJA AÍ DPS
+
+public class LivrosTouchListener implements RecyclerView.OnItemTouchListener{
+
+
+
+    private GestureDetector gestureDetector;
+
+    private LivrosClickListener clickListener;
+
+
+
+    public LivrosTouchListener(Context context, final RecyclerView recyclerView, final LivrosClickListener clickListener) {
+
+        this.clickListener = clickListener;
+
+        gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
+
+            @Override
+
+            public boolean onSingleTapUp(MotionEvent e) {
+
+                return true;
+
+            }
+
+
+
+            @Override
+
+            public void onLongPress(MotionEvent e) {
+
+                View child = recyclerView.findChildViewUnder(e.getX(), e.getY());
+
+                if (child != null && clickListener != null) {
+
+                    clickListener.onLongClick(child, recyclerView.getChildAdapterPosition(child));
+
+                }
+
+            }
+
+        });
+
+    }
+
+
+
+    @Override
+
+    public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+
+
+
+        View child = rv.findChildViewUnder(e.getX(), e.getY());
+
+        if (child != null && clickListener != null && gestureDetector.onTouchEvent(e)) {
+
+            clickListener.onClick(child, rv.getChildAdapterPosition(child));
+
+        }
+
+        return false;
+
+    }
+
+
+
+    @Override
+
+    public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+
+    }
+
+
+
+    @Override
+
+    public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+
+
+    }
+
+}
+*/
