@@ -10,4 +10,5 @@ public interface IToken {
     void inserir(TokenAuthentication token, String username, String matricula);
     ArrayList<TokenAuthentication> getTokens();
     String getTokenPorStatus();
+    TokenAuthentication getUsuarioLogado();
 }

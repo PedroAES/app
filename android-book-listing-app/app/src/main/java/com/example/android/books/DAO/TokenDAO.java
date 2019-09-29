@@ -60,8 +60,24 @@ public class TokenDAO implements IToken {
             token = c.getString( c.getColumnIndex( "token" ) );
 
         return token;
-
     }
+
+    @Override
+    public TokenAuthentication getUsuarioLogado() {
+        String sql = "SELECT * FROM token where status=1;";
+        Cursor c = ler.rawQuery( sql, null );
+        if(c == null)
+            return null;
+        TokenAuthentication authentication= new TokenAuthentication(  );
+        while (c.moveToNext()){
+            authentication.setUsername( c.getString( c.getColumnIndex( "username" ) ) );
+            authentication.setMatricula( c.getString( c.getColumnIndex( "matricula" ) )  );
+            authentication.setToken( c.getString( c.getColumnIndex( "token" ) ) );
+            authentication.setStatus( c.getInt( c.getColumnIndex( "status" ) )  );
+        }
+        return authentication;
+    }
+
 
     private Conexao conexao;
     private SQLiteDatabase escrever;

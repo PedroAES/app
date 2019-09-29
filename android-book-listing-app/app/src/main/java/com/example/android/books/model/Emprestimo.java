@@ -6,16 +6,16 @@ import java.util.List;
 public class Emprestimo {
 
     private String codigo;
-    private String matriculaUsuario;
-    private String dataEmprestimo;
-    private String dataDevolucao;
+    private String matricula_usuario;
+    private String data_emprestimo;
+    private String data_devolucao;
     private List<String> emprestimos;
 
     public Emprestimo(String codigo, String matriculaUsuario, String dataEmprestimo, String dataDevolucao) {
         this.codigo = codigo;
-        this.matriculaUsuario = matriculaUsuario;
-        this.dataEmprestimo = dataEmprestimo;
-        this.dataDevolucao = dataDevolucao;
+        this.matricula_usuario = matriculaUsuario;
+        this.data_emprestimo = dataEmprestimo;
+        this.data_devolucao = dataDevolucao;
         this.emprestimos = new ArrayList<>(  );
     }
 
@@ -27,28 +27,28 @@ public class Emprestimo {
         this.codigo = codigo;
     }
 
-    public String getMatriculaUsuario() {
-        return matriculaUsuario;
+    public String getMatricula_usuario() {
+        return matricula_usuario;
     }
 
-    public void setMatriculaUsuario(String matriculaUsuario) {
-        this.matriculaUsuario = matriculaUsuario;
+    public void setMatricula_usuario(String matricula_usuario) {
+        this.matricula_usuario = matricula_usuario;
     }
 
-    public String getDataEmprestimo() {
-        return dataEmprestimo;
+    public String getData_emprestimo() {
+        return data_emprestimo;
     }
 
-    public void setDataEmprestimo(String dataEmprestimo) {
-        this.dataEmprestimo = dataEmprestimo;
+    public void setData_emprestimo(String data_emprestimo) {
+        this.data_emprestimo = data_emprestimo;
     }
 
     public String getDataDevolucao() {
-        return dataDevolucao;
+        return data_devolucao;
     }
 
     public void setDataDevolucao(String dataDevolucao) {
-        this.dataDevolucao = dataDevolucao;
+        this.data_devolucao = dataDevolucao;
     }
 
     public List<String> getEmprestimos() {

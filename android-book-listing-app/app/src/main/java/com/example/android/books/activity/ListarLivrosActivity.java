@@ -1,6 +1,7 @@
 package com.example.android.books.activity;
 
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -17,10 +18,22 @@ import com.example.android.books.R;
 import com.example.android.books.adapter.LivroAdapter;
 import com.example.android.books.adapter.LivrosTouchListener;
 import com.example.android.books.interfaces.ILivrosClickListener;
+import com.example.android.books.model.Emprestimo;
 import com.example.android.books.model.Livro;
+import com.example.android.books.model.TokenAuthentication;
+import com.example.android.books.retrofit.RetrofitConfig;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class ListarLivrosActivity extends AppCompatActivity {
 
@@ -77,8 +90,15 @@ public class ListarLivrosActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         Livro livro = livrosEscolhido.get( indice );
-                        //pegar a matricula do usuário na tabela do token
-                        //pegar a data do sistema do dia e da devolução
+                        TokenAuthentication logado= tokenDAO.getUsuarioLogado();
+                        DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                        Date date = new Date();
+                        String dataFormatada= dateFormat.format(date);
+                        String data_emprestimo= formatoData( dataFormatada, 0 );
+                        String data_devolucao= formatoData( dataFormatada, 1 );
+                        emprestimosUsuario(logado);
+                        //verificar se há emprestimos do usuário...
+                        //ver se a data é a mesma
                     }
                 } )
                 .setNegativeButton( "Não", new DialogInterface.OnClickListener() {
@@ -90,9 +110,51 @@ public class ListarLivrosActivity extends AppCompatActivity {
                 .show();
     }
 
+    @SuppressWarnings("deprecation")
+    public String formatoData(String dataFormatada, int tipo_data){
+        String data_ = "";
+        //2019-09-10T12:00:00-03:00
+        String data = dataFormatada.split( " " )[0];
+        String hora = dataFormatada.split( " " )[1];
+        if(tipo_data == 1){
+            SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            Date a = new Date();
+            Calendar c = Calendar.getInstance();
+            try {
+                a = dateFormat.parse( data );
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+            c.setTime( a );
+            c.add(c.DATE, +10);
+            a = c.getTime();
+            data = dateFormat.format(a);
+        }
+        data_+=data + "T" + hora + "-03:00";
+        return data_;
+    }
+
+    public void emprestimosUsuario(TokenAuthentication t){
+        Call<Emprestimo> call = new RetrofitConfig().getLivroService().getEmprestimo( "Token "+ t.getToken(), t.getMatricula() );
+        call.enqueue( new Callback<Emprestimo>() {
+            @Override
+            public void onResponse(Call<Emprestimo> call, Response<Emprestimo> response) {
+                if(response.isSuccessful()){
+                    emprestimo = response.body();
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Emprestimo> call, Throwable t) {
+
+            }
+        } );
+    }
+
     private TokenDAO tokenDAO;
     private List<Livro> livrosTotal;
     private List<Livro> livrosEscolhido = new ArrayList<>(  );
     private RecyclerView rv;
     private LivroDAO livroDAO;
+    private Emprestimo emprestimo;
 }
