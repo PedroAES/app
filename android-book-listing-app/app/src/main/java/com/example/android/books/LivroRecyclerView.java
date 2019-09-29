@@ -61,13 +61,15 @@ public class LivroRecyclerView extends RecyclerView implements RecyclerView.OnIt
 	@Override
 	public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
 		View childView = rv.findChildViewUnder(e.getX(), e.getY());
-
+	
+		/*
 		if (childView != null && mListener != null && mGestureDetector.onTouchEvent(e)) {
 
 			return true;
 		}
 
-		return false;
+		return false; */
+		return childView != null && mListener != null && mGestureDetector.onTouchEvent(e);
 	}
 
 	public LivroRecyclerView(Context context, RecyclerView recyclerView, AdapterView.OnItemClickListener listener) {
