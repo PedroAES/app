@@ -6,6 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.example.android.books.model.Emprestimo;
+
 import java.util.List;
 
 public class EmprestimosAdapter extends RecyclerView.Adapter<EmprestimosAdapter.EmprestimoViewHolder>{

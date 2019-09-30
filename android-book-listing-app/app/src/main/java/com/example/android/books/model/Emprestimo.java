@@ -1,21 +1,34 @@
 package com.example.android.books.model;
 
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Emprestimo {
 
+    @SerializedName("codigo")
+    @Expose
     private String codigo;
-    private String matricula_usuario;
-    private String data_emprestimo;
-    private String data_devolucao;
-    private List<String> emprestimos;
+    @SerializedName("matricula_usuario")
+    @Expose
+    private String matriculaUsuario;
+    @SerializedName("data_emprestimo")
+    @Expose
+    private String dataEmprestimo;
+    @SerializedName("data_devolucao")
+    @Expose
+    private String dataDevolucao;
+    @SerializedName("emprestimos")
+    @Expose
+    private List<String> emprestimos = null;
 
     public Emprestimo(String codigo, String matriculaUsuario, String dataEmprestimo, String dataDevolucao) {
         this.codigo = codigo;
-        this.matricula_usuario = matriculaUsuario;
-        this.data_emprestimo = dataEmprestimo;
-        this.data_devolucao = dataDevolucao;
+        this.matriculaUsuario = matriculaUsuario;
+        this.dataEmprestimo = dataEmprestimo;
+        this.dataDevolucao = dataDevolucao;
         this.emprestimos = new ArrayList<>(  );
     }
 
@@ -28,34 +41,34 @@ public class Emprestimo {
     }
 
     public String getMatricula_usuario() {
-        return matricula_usuario;
+        return matriculaUsuario;
     }
 
     public void setMatricula_usuario(String matricula_usuario) {
-        this.matricula_usuario = matricula_usuario;
+        this.matriculaUsuario = matricula_usuario;
     }
 
     public String getData_emprestimo() {
-        return data_emprestimo;
+        return dataEmprestimo;
     }
 
     public void setData_emprestimo(String data_emprestimo) {
-        this.data_emprestimo = data_emprestimo;
+        this.dataEmprestimo = data_emprestimo;
     }
 
     public String getDataDevolucao() {
-        return data_devolucao;
+        return dataDevolucao;
     }
 
     public void setDataDevolucao(String dataDevolucao) {
-        this.data_devolucao = dataDevolucao;
+        this.dataDevolucao = dataDevolucao;
     }
 
     public List<String> getEmprestimos() {
         return emprestimos;
     }
 
-    public void setEmprestimos(String titulo) {
-        this.emprestimos.add( titulo );
+    public void setEmprestimos(List<String> emprestimos) {
+        this.emprestimos = emprestimos;
     }
 }

@@ -1,7 +1,6 @@
 package com.example.android.books.activity;
 
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -91,13 +90,14 @@ public class ListarLivrosActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         Livro livro = livrosEscolhido.get( indice );
                         TokenAuthentication logado= tokenDAO.getUsuarioLogado();
+                        matricula = logado.getMatricula();
                         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         Date date = new Date();
                         String dataFormatada= dateFormat.format(date);
                         String data_emprestimo= formatoData( dataFormatada, 0 );
                         String data_devolucao= formatoData( dataFormatada, 1 );
                         emprestimosUsuario(logado);
-                        //verificar se há emprestimos do usuário...
+
                         //ver se a data é a mesma
                     }
                 } )
@@ -135,20 +135,28 @@ public class ListarLivrosActivity extends AppCompatActivity {
     }
 
     public void emprestimosUsuario(TokenAuthentication t){
-        Call<Emprestimo> call = new RetrofitConfig().getLivroService().getEmprestimo( "Token "+ t.getToken(), t.getMatricula() );
-        call.enqueue( new Callback<Emprestimo>() {
+        Call<List<Emprestimo>> call = new RetrofitConfig().getLivroService().getEmprestimos( "Token "+ t.getToken() );
+        call.enqueue( new Callback<List<Emprestimo>>() {
             @Override
-            public void onResponse(Call<Emprestimo> call, Response<Emprestimo> response) {
+            public void onResponse(Call<List<Emprestimo>> call, Response<List<Emprestimo>> response) {
                 if(response.isSuccessful()){
-                    emprestimo = response.body();
+                    emprestimos = response.body();
+                    for(Emprestimo emprestimo: emprestimos)
+                        if(matricula.equalsIgnoreCase( emprestimo.getMatricula_usuario()))
+                            emprestimosUsuario.add( emprestimo );
                 }
             }
-
             @Override
-            public void onFailure(Call<Emprestimo> call, Throwable t) {
-
-            }
+            public void onFailure(Call<List<Emprestimo>> call, Throwable t) { }
         } );
+    }
+
+    public int verificaDados(String data){
+        for(Emprestimo e : emprestimosUsuario){
+            //verificar data
+
+        }
+        return 0;
     }
 
     private TokenDAO tokenDAO;
@@ -156,5 +164,7 @@ public class ListarLivrosActivity extends AppCompatActivity {
     private List<Livro> livrosEscolhido = new ArrayList<>(  );
     private RecyclerView rv;
     private LivroDAO livroDAO;
-    private Emprestimo emprestimo;
+    private List<Emprestimo> emprestimos;
+    private List<Emprestimo> emprestimosUsuario= new ArrayList<>(  );
+    private String matricula;
 }

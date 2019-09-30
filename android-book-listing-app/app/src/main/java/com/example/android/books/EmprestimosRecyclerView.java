@@ -6,14 +6,14 @@ import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
 
-import com.example.android.books.interfaces.LivrosClickListener;
+import com.example.android.books.interfaces.ILivrosClickListener;
 
 public class EmprestimosRecyclerView implements RecyclerView.OnItemTouchListener{
 
     private GestureDetector gestureDetector;
-    private LivrosClickListener clickListener;
+    private ILivrosClickListener clickListener;
 
-    public EmprestimosRecyclerView(Context context, final RecyclerView recyclerView, final LivrosClickListener clickListener) {
+    public EmprestimosRecyclerView(Context context, final RecyclerView recyclerView, final ILivrosClickListener clickListener) {
         this.clickListener = clickListener;
         gestureDetector = new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
             @Override

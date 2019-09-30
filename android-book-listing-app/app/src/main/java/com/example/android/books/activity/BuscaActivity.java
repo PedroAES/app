@@ -18,7 +18,9 @@ import android.widget.Toast;
 
 import com.example.android.books.DAO.TokenDAO;
 import com.example.android.books.R;
+import com.example.android.books.model.Emprestimo;
 import com.example.android.books.model.Livro;
+import com.example.android.books.model.TokenAuthentication;
 import com.example.android.books.retrofit.RetrofitConfig;
 
 import java.io.Serializable;
@@ -49,6 +51,7 @@ public class BuscaActivity extends AppCompatActivity {
 			}
 		});
         buscarLivros();
+        //emprestimosUsuario();
 	}
 
 	public void buscar(View view) {
@@ -124,7 +127,26 @@ public class BuscaActivity extends AppCompatActivity {
 		});
 	}
 
+//    public void emprestimosUsuario(){
+//        TokenAuthentication logado= tokenDAO.getUsuarioLogado();
+//        Call<Emprestimo> call = new RetrofitConfig().getLivroService().getEmprestimo( "Token "+ logado.getToken(), logado.getMatricula() );
+//        call.enqueue( new Callback<Emprestimo>() {
+//            @Override
+//            public void onResponse(Call<Emprestimo> call, Response<Emprestimo> response) {
+//                if(response.isSuccessful()){
+//                    emprestimo = response.body();
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(Call<Emprestimo> call, Throwable t) {
+//
+//            }
+//        } );
+//    }
+
 	private EditText userBusca;
     private TokenDAO tokenDAO;
     private List<Livro> teste;
+    private Emprestimo emprestimo;
 }

@@ -12,12 +12,18 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
+import retrofit2.http.Field;
+import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Headers;
+import retrofit2.http.Multipart;
 import retrofit2.http.POST;
 import retrofit2.http.PUT;
+import retrofit2.http.Part;
+import retrofit2.http.Path;
 import retrofit2.http.Query;
+import retrofit2.http.QueryName;
 
 public interface LivroService {
 
@@ -32,7 +38,7 @@ public interface LivroService {
     @POST("logout/")
     Call<Usuario> logoutUsuario(@Body Usuario usuario);
     @GET("usuarios/{matricula}")
-    Call<Usuario> getUsuario(@Header("Authorization") String token,@Query("matricula") String matricula);
+    Call<Usuario> getUsuario(@Header("Authorization") String token,@Path("matricula") String matricula);
     @GET("usuarios/")
     Call<List<Usuario>> getUsuarios();
     @POST("usuarios/")
@@ -44,23 +50,23 @@ public interface LivroService {
     @POST("livros/")
     Call<Livro> addLivros(@Header("Authorization") String token, @Body Livro livro);
     @GET("livros/{codigo}")
-    Call<Livro> getLivro(@Header("Authorization") String token,@Body Livro livro,@Query("codigo") String codigo);
+    Call<Livro> getLivro(@Header("Authorization") String token,@Body Livro livro,@Path("codigo") String codigo);
     @PUT("livros/{codigo}")
-    Call<Livro> updateLivro(@Header("Authorization") String token,@Body Livro livro,@Query("codigo") String codigo);
+    Call<Livro> updateLivro(@Header("Authorization") String token,@Body Livro livro,@Path("codigo") String codigo);
     @DELETE("livros/{codigo}")
-    Call<Livro> deleteLivro(@Header("Authorization") String token,@Body Livro livro,@Query("codigo") String codigo);
+    Call<Livro> deleteLivro(@Header("Authorization") String token,@Body Livro livro,@Path("codigo") String codigo);
 
     //EMPRESTIMOS
     @GET("emprestimos/")
     Call<List<Emprestimo>> getEmprestimos(@Header("Authorization") String token);
     @POST("emprestimos/")
-    Call<Emprestimo> addEmprestimos(@Header("Authorization") String token,@Body Emprestimo emprestimo);
-    @GET("emprestimos/")
-    Call<Emprestimo> getEmprestimo(@Header("Authorization") String token,@Query("matricula_usuario") String matricula_usuario);
+    Call<Emprestimo> addEmprestimo(@Header("Authorization") String token,@Body Emprestimo emprestimo);
+    @GET("emprestimos/{matricula_usuario}")
+    Call<Emprestimo> getEmprestimo(@Header("Authorization") String token,@Path( "matricula_usuario" ) String matricula_usuario);
     @PUT("emprestimos/{matricula_usuario}")
-    Call<Emprestimo> updateEmprestimo(@Header("Authorization") String token,@Body Emprestimo Emprestimo,@Query("matricula_usuario") String matricula_usuario);
+    Call<Emprestimo> updateEmprestimo(@Header("Authorization") String token,@Body Emprestimo Emprestimo,@Path("matricula_usuario") String matricula_usuario);
     @DELETE("emprestimos/{matricula_usuario}")
-    Call<Emprestimo> deleteEmprestimo(@Header("Authorization") String token,@Body Emprestimo Emprestimo,@Query("matricula_usuario") String matricula_usuario);
+    Call<Emprestimo> deleteEmprestimo(@Header("Authorization") String token,@Body Emprestimo Emprestimo,@Path("matricula_usuario") String matricula_usuario);
 
     //SESSOES
     @GET("sessoes/")
