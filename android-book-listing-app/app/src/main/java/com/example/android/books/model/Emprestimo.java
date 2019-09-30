@@ -3,10 +3,11 @@ package com.example.android.books.model;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Emprestimo {
+public class Emprestimo implements Serializable {
 
     @SerializedName("codigo")
     @Expose

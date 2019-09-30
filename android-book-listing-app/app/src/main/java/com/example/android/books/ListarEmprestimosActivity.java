@@ -8,7 +8,8 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Toast;
 
-import com.example.android.books.interfaces.LivrosClickListener;
+import com.example.android.books.interfaces.ILivrosClickListener;
+import com.example.android.books.model.Emprestimo;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,7 +23,7 @@ public class ListarEmprestimosActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.listar_emprestimos_activity);
         RecyclerView recyclerView = findViewById(R.id.recycler_view_emprestimos);
-        recyclerView.addOnItemTouchListener(new EmprestimosRecyclerView(getApplicationContext(), recyclerView, new LivrosClickListener() {
+        recyclerView.addOnItemTouchListener(new EmprestimosRecyclerView(getApplicationContext(), recyclerView, new ILivrosClickListener() {
             @Override
             public void onClick(View view, int indice) {
                 Toast.makeText(getApplicationContext(),
@@ -46,9 +47,9 @@ public class ListarEmprestimosActivity extends AppCompatActivity {
 
     private void initEmprestimoData() {
         Emprestimo emprestimo = new Emprestimo("12", "54", "12/01/1993", "31/01/1999");
-        emprestimo.setEmprestimos("livro1");
-        emprestimo.setEmprestimos("livro2");
-        emprestimo.setEmprestimos("livro3");
+//        emprestimo.setEmprestimos("livro1");
+//        emprestimo.setEmprestimos("livro2");
+//        emprestimo.setEmprestimos("livro3");
         emprestimos.add(emprestimo);
 
         emprestimo = new Emprestimo("11", "Hashtag", "12/02/2000", "21/11/2001");

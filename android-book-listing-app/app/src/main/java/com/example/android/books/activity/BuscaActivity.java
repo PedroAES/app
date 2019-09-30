@@ -24,6 +24,7 @@ import com.example.android.books.model.TokenAuthentication;
 import com.example.android.books.retrofit.RetrofitConfig;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import retrofit2.Call;
@@ -51,7 +52,7 @@ public class BuscaActivity extends AppCompatActivity {
 			}
 		});
         buscarLivros();
-        //emprestimosUsuario();
+        emprestimosUsuario();
 	}
 
 	public void buscar(View view) {
@@ -63,6 +64,7 @@ public class BuscaActivity extends AppCompatActivity {
 			Intent i = new Intent( this, ListarLivrosActivity.class );
 			i.putExtra( "titulo", titulo );
 			i.putExtra( "lista", (Serializable) teste );
+			i.putExtra("emprestimos", (Serializable) emprestimosUsuario);
 			startActivity( i );
 
 		} else {
@@ -127,26 +129,33 @@ public class BuscaActivity extends AppCompatActivity {
 		});
 	}
 
-//    public void emprestimosUsuario(){
-//        TokenAuthentication logado= tokenDAO.getUsuarioLogado();
-//        Call<Emprestimo> call = new RetrofitConfig().getLivroService().getEmprestimo( "Token "+ logado.getToken(), logado.getMatricula() );
-//        call.enqueue( new Callback<Emprestimo>() {
-//            @Override
-//            public void onResponse(Call<Emprestimo> call, Response<Emprestimo> response) {
-//                if(response.isSuccessful()){
-//                    emprestimo = response.body();
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(Call<Emprestimo> call, Throwable t) {
-//
-//            }
-//        } );
-//    }
+	public void emprestimosUsuario(){
+		TokenAuthentication logado= tokenDAO.getUsuarioLogado();
+		matricula = logado.getMatricula();
+		Call<List<Emprestimo>> call = new RetrofitConfig().getLivroService().getEmprestimos( "Token "+ logado.getToken());
+		call.enqueue( new Callback<List<Emprestimo>>() {
+			@Override
+			public void onResponse(Call<List<Emprestimo>> call, Response<List<Emprestimo>> response) {
+				if(response.isSuccessful()){
+					emprestimos = response.body();
+					for(Emprestimo emprestimo: emprestimos)
+						if(matricula.equalsIgnoreCase( emprestimo.getMatricula_usuario()))
+							emprestimosUsuario.add( emprestimo );
+				}
+			}
+			@Override
+			public void onFailure(Call<List<Emprestimo>> call, Throwable t) {
+
+			}
+		} );
+	}
+
 
 	private EditText userBusca;
     private TokenDAO tokenDAO;
     private List<Livro> teste;
     private Emprestimo emprestimo;
+	private List<Emprestimo> emprestimos;
+    private List<Emprestimo> emprestimosUsuario= new ArrayList<>(  );
+	private String matricula;
 }

@@ -46,6 +46,7 @@ public class ListarLivrosActivity extends AppCompatActivity {
 
         String titulo = getIntent().getStringExtra( "titulo" );
         livrosTotal = (List<Livro>) getIntent().getSerializableExtra( "lista" );
+        emprestimosUsuario= (List<Emprestimo>) getIntent().getSerializableExtra( "emprestimos" );
 
         if(titulo != null){
             for(Livro livro: livrosTotal)
@@ -96,7 +97,9 @@ public class ListarLivrosActivity extends AppCompatActivity {
                         String dataFormatada= dateFormat.format(date);
                         String data_emprestimo= formatoData( dataFormatada, 0 );
                         String data_devolucao= formatoData( dataFormatada, 1 );
-                        emprestimosUsuario(logado);
+                        //emprestimosUsuario(logado);
+
+                        //if(verificaDados(dataFormatada) ==1)
 
                         //ver se a data é a mesma
                     }
@@ -147,14 +150,21 @@ public class ListarLivrosActivity extends AppCompatActivity {
                 }
             }
             @Override
-            public void onFailure(Call<List<Emprestimo>> call, Throwable t) { }
+            public void onFailure(Call<List<Emprestimo>> call, Throwable t) {
+
+            }
         } );
     }
 
     public int verificaDados(String data){
         for(Emprestimo e : emprestimosUsuario){
-            //verificar data
-
+            String data_dev = e.getData_emprestimo().split("T")[0];
+            String data_sist = data.split(" ")[0];
+            if(data_dev.equalsIgnoreCase(data_sist)){
+                //mesmo dia, livro só é acrescentado e faz o put em vez do post
+                emprestimo = e;
+                return 1;
+            }
         }
         return 0;
     }
@@ -166,5 +176,6 @@ public class ListarLivrosActivity extends AppCompatActivity {
     private LivroDAO livroDAO;
     private List<Emprestimo> emprestimos;
     private List<Emprestimo> emprestimosUsuario= new ArrayList<>(  );
+    private Emprestimo emprestimo;
     private String matricula;
 }
