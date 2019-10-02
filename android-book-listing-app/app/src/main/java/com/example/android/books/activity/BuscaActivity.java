@@ -64,7 +64,7 @@ public class BuscaActivity extends AppCompatActivity {
 			Intent i = new Intent( this, ListarLivrosActivity.class );
 			i.putExtra( "titulo", titulo );
 			i.putExtra( "lista", (Serializable) teste );
-			i.putExtra("emprestimos", (Serializable) emprestimosUsuario);
+			i.putExtra("emprestimos", (Serializable) emprestimos);
 			startActivity( i );
 
 		} else {
@@ -138,18 +138,17 @@ public class BuscaActivity extends AppCompatActivity {
 			public void onResponse(Call<List<Emprestimo>> call, Response<List<Emprestimo>> response) {
 				if(response.isSuccessful()){
 					emprestimos = response.body();
-					for(Emprestimo emprestimo: emprestimos)
-						if(matricula.equalsIgnoreCase( emprestimo.getMatricula_usuario()))
-							emprestimosUsuario.add( emprestimo );
+//					for(Emprestimo emprestimo: emprestimos)
+//						if(matricula.equalsIgnoreCase( emprestimo.getMatricula_usuario()))
+//							emprestimosUsuario.add( emprestimo );
 				}
 			}
 			@Override
 			public void onFailure(Call<List<Emprestimo>> call, Throwable t) {
-
+				Log.e( "Token   ", "Erro ao buscar o token:" + t.getMessage() );
 			}
 		} );
 	}
-
 
 	private EditText userBusca;
     private TokenDAO tokenDAO;

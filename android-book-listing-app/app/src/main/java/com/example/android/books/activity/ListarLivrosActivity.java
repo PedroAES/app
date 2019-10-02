@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.DividerItemDecoration;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -43,10 +44,13 @@ public class ListarLivrosActivity extends AppCompatActivity {
         livroDAO = new LivroDAO( this );
         tokenDAO = new TokenDAO( this);
         rv = (RecyclerView)findViewById( R.id.rv);
-
-        String titulo = getIntent().getStringExtra( "titulo" );
+        logado= tokenDAO.getUsuarioLogado();
+        titulo = getIntent().getStringExtra( "titulo" );
         livrosTotal = (List<Livro>) getIntent().getSerializableExtra( "lista" );
-        emprestimosUsuario= (List<Emprestimo>) getIntent().getSerializableExtra( "emprestimos" );
+        emprestimos= (List<Emprestimo>) getIntent().getSerializableExtra( "emprestimos" );
+        for(Emprestimo emprestimo: emprestimos)
+            if(logado.getMatricula().equalsIgnoreCase( emprestimo.getMatricula_usuario()))
+                emprestimosUsuario.add( emprestimo );
 
         if(titulo != null){
             for(Livro livro: livrosTotal)
@@ -89,9 +93,7 @@ public class ListarLivrosActivity extends AppCompatActivity {
                 .setPositiveButton( "Sim", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        Livro livro = livrosEscolhido.get( indice );
-                        TokenAuthentication logado= tokenDAO.getUsuarioLogado();
-                        matricula = logado.getMatricula();
+
                         DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                         Date date = new Date();
                         String dataFormatada= dateFormat.format(date);
@@ -99,9 +101,23 @@ public class ListarLivrosActivity extends AppCompatActivity {
                         String data_devolucao= formatoData( dataFormatada, 1 );
                         //emprestimosUsuario(logado);
 
-                        //if(verificaDados(dataFormatada) ==1)
+                        int result =verificaDados(dataFormatada);
 
-                        //ver se a data é a mesma
+                        if(result==1){
+                            atualizaEmprestimo(logado);
+                        }else if(result==0){
+                            String cod_cadastro= "";
+                            String codigo = emprestimos.get( emprestimos.size()-1 ).getCodigo();
+                            for(int i=0; i< codigo.length(); i++)
+                                if(codigo.charAt(i) == '0')
+                                    cod_cadastro+="0";
+                            int cod = Integer.parseInt(codigo) + 1;
+                            cod_cadastro+= String.valueOf( cod );
+                            emprestimo = new Emprestimo(cod_cadastro,logado.getMatricula(),data_emprestimo,data_devolucao );
+                            emprestimo.getEmprestimos().add( titulo );
+                            novoEmprestimo(logado);
+                        }
+
                     }
                 } )
                 .setNegativeButton( "Não", new DialogInterface.OnClickListener() {
@@ -145,30 +161,68 @@ public class ListarLivrosActivity extends AppCompatActivity {
                 if(response.isSuccessful()){
                     emprestimos = response.body();
                     for(Emprestimo emprestimo: emprestimos)
-                        if(matricula.equalsIgnoreCase( emprestimo.getMatricula_usuario()))
+                        if(logado.getMatricula().equalsIgnoreCase( emprestimo.getMatricula_usuario()))
                             emprestimosUsuario.add( emprestimo );
                 }
             }
             @Override
             public void onFailure(Call<List<Emprestimo>> call, Throwable t) {
-
+                Log.e( "Token   ", "Erro ao buscar o token:" + t.getMessage() );
             }
         } );
     }
 
     public int verificaDados(String data){
         for(Emprestimo e : emprestimosUsuario){
-            String data_dev = e.getData_emprestimo().split("T")[0];
+            String data_emp = e.getData_emprestimo().split("T")[0];
             String data_sist = data.split(" ")[0];
-            if(data_dev.equalsIgnoreCase(data_sist)){
+            if(data_emp.equalsIgnoreCase(data_sist)){
                 //mesmo dia, livro só é acrescentado e faz o put em vez do post
                 emprestimo = e;
+                emprestimo.getEmprestimos().add( titulo );
                 return 1;
             }
         }
         return 0;
     }
 
+    //PUT
+    public void atualizaEmprestimo(TokenAuthentication t){
+        Call<Emprestimo> call = new RetrofitConfig().getLivroService().updateEmprestimo( "Token "+t.getToken(),emprestimo.getCodigo(),emprestimo );
+        call.enqueue( new Callback<Emprestimo>() {
+            @Override
+            public void onResponse(Call<Emprestimo> call, Response<Emprestimo> response) {
+                if(response.isSuccessful())
+                    Toast.makeText(getApplicationContext(),
+                            "Empréstimo do livro "+ titulo + " realizado com sucesso!!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Emprestimo> call, Throwable t) {
+                Log.e( "Token   ", "Erro ao buscar o token:" + t.getMessage() );
+            }
+        } );
+    }
+
+    //POST
+    public void novoEmprestimo(TokenAuthentication t){
+        Call<Emprestimo> call= new RetrofitConfig().getLivroService().addEmprestimo( "Token "+ t.getToken(), emprestimo );
+        call.enqueue( new Callback<Emprestimo>() {
+            @Override
+            public void onResponse(Call<Emprestimo> call, Response<Emprestimo> response) {
+                if(response.isSuccessful())
+                    Toast.makeText(getApplicationContext(),
+                            "Empréstimo do livro "+ titulo + " realizado com sucesso!!", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onFailure(Call<Emprestimo> call, Throwable t) {
+                Log.e( "Token   ", "Erro ao buscar o token:" + t.getMessage() );
+            }
+        } );
+    }
+
+    private String titulo;
     private TokenDAO tokenDAO;
     private List<Livro> livrosTotal;
     private List<Livro> livrosEscolhido = new ArrayList<>(  );
@@ -177,5 +231,5 @@ public class ListarLivrosActivity extends AppCompatActivity {
     private List<Emprestimo> emprestimos;
     private List<Emprestimo> emprestimosUsuario= new ArrayList<>(  );
     private Emprestimo emprestimo;
-    private String matricula;
+    TokenAuthentication logado;
 }

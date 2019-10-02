@@ -61,12 +61,12 @@ public interface LivroService {
     Call<List<Emprestimo>> getEmprestimos(@Header("Authorization") String token);
     @POST("emprestimos/")
     Call<Emprestimo> addEmprestimo(@Header("Authorization") String token,@Body Emprestimo emprestimo);
-    @GET("emprestimos/{matricula_usuario}")
-    Call<Emprestimo> getEmprestimo(@Header("Authorization") String token,@Path( "matricula_usuario" ) String matricula_usuario);
-    @PUT("emprestimos/{matricula_usuario}")
-    Call<Emprestimo> updateEmprestimo(@Header("Authorization") String token,@Body Emprestimo Emprestimo,@Path("matricula_usuario") String matricula_usuario);
-    @DELETE("emprestimos/{matricula_usuario}")
-    Call<Emprestimo> deleteEmprestimo(@Header("Authorization") String token,@Body Emprestimo Emprestimo,@Path("matricula_usuario") String matricula_usuario);
+    @GET("emprestimos/{codigo}")
+    Call<Emprestimo> getEmprestimo(@Header("Authorization") String token,@Path( "codigo" ) String codigo);
+    @PUT("emprestimos/{codigo}")
+    Call<Emprestimo> updateEmprestimo(@Header("Authorization") String token,@Path("codigo") String codigo, @Body Emprestimo emprestimo);
+    @DELETE("emprestimos/{codigo}")
+    Call<Emprestimo> deleteEmprestimo(@Header("Authorization") String token,@Body Emprestimo Emprestimo,@Path("codigo") String codigo);
 
     //SESSOES
     @GET("sessoes/")
