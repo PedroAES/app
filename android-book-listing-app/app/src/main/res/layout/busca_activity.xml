@@ -8,9 +8,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.example.android.books.activity.BuscaActivity">
-
-    <!-- Card View for the user's search text and search button -->
-
+    
+    <ImageButton
+        android:id="@+id/sair"
+        android:layout_width="50dp"
+        android:layout_height="30dp"
+        android:layout_alignParentRight="true"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="5dp"
+        android:background="@drawable/sair"
+        android:cropToPadding="false"
+        android:onClick="sair"/>
+    
     <android.support.v7.widget.CardView
         android:id="@+id/card_view"
         android:layout_width="@dimen/search_bar_width"
@@ -18,12 +27,10 @@
         android:layout_centerInParent="true"
         app:cardUseCompatPadding="true">
 
-        <!-- Horizontal LinearLayout container for the text and the button -->
         <LinearLayout
             android:layout_width="@dimen/search_bar_width"
             android:layout_height="match_parent">
 
-            <!-- Editable TextView for the user's search criteria -->
             <EditText
                 android:id="@+id/entrada"
                 android:layout_width="@dimen/search_editable_text_width"
@@ -34,8 +41,7 @@
                 android:inputType="text"
                 android:maxLines="1"
                 android:padding="@dimen/min_dimension"/>
-
-            <!-- Button for the user to get the results for their search -->
+            
             <ImageButton
                 android:id="@+id/btn_buscar"
                 android:layout_width="@dimen/search_button_width"
@@ -50,19 +56,12 @@
 
     </android.support.v7.widget.CardView>
 
-    <!-- TextView for the title of the search interface -->
-
-    <!-- Checkbox for searching book titles matching search text -->
     <RadioGroup
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/card_view"
         android:layout_centerInParent="true"
         android:orientation="horizontal">
-
-        <!-- Checkbox for searching book authors matching search text -->
-
-        <!-- Checkbox for searching books based on ISBN of the book -->
 
     </RadioGroup>
 
@@ -90,6 +89,4 @@
         android:contentDescription="@string/search_button_content_desc"
         android:cropToPadding="false"
         android:onClick="buscar" />
-
-
 </RelativeLayout>
