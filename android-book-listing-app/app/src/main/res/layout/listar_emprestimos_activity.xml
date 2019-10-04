@@ -8,7 +8,7 @@
     android:paddingRight="16dp"
     android:paddingTop="16dp"
     android:background="@drawable/fundo2"
-    tools:context=".ListarEmprestimosActivity">
+    tools:context=".activity.ListarEmprestimosActivity">
 
     <TextView
         android:id="@+id/textView"
@@ -28,6 +28,7 @@
         android:layout_height="715dp"
         android:gravity="bottom"
         android:scrollbars="vertical"
-        android:layout_marginTop="80dp"/>
+        android:layout_marginTop="80dp"
+        tools:listitem="@layout/items_emprestimos"/>
 
 </RelativeLayout>

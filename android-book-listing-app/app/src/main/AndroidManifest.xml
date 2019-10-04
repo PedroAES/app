@@ -10,7 +10,8 @@
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
         <activity android:name=".activity.CadastroActivity" />
         <activity android:name=".activity.CadastroLivroActivity" />
-        <activity android:name=".activity.ListarLivrosActivity"/>
+        <activity android:name=".activity.ListarLivrosActivity" />
+        <activity android:name=".activity.ListarEmprestimosActivity" />
         <activity android:name=".activity.BuscaActivity" />
         <activity android:name=".activity.LoginActivity">
             <intent-filter>
@@ -27,8 +28,8 @@
                 android:value="com.example.android.books.activity.LoginActivity" />
         </activity>
     </application>
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-
     <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
 </manifest>

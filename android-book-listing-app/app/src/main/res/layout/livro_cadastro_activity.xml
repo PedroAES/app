@@ -29,7 +29,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="@android:color/white"
-        android:hint="Nome"
+        android:hint="Código do livro"
         android:inputType="textPersonName"
         android:padding="10dp" />
 
@@ -39,7 +39,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="@android:color/white"
-        android:hint="E-mail"
+        android:hint="Título"
         android:inputType="textPersonName"
         android:padding="10dp" />
 
@@ -49,19 +49,28 @@
         android:layout_height="wrap_content"
         android:layout_margin="5dp"
         android:background="@android:color/white"
-        android:hint="Matricula"
-        android:inputType="textPassword"
+        android:hint="Autor"
+        android:inputType="textPersonName"
         android:padding="10dp" />
 
-    <EditText
-        android:id="@+id/codigo_sessao"
+    <Spinner
+        android:id="@+id/spinner_sessoes"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="5dp"
-        android:background="@android:color/white"
-        android:hint="Codigo da Sessão"
-        android:inputType="textPassword"
-        android:padding="10dp" />
+        android:overlapAnchor="true"
+        android:clickable="true"
+        android:spinnerMode="dropdown"
+        />
+
+<!--    <EditText-->
+<!--        android:id="@+id/codigo_sessao"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_margin="5dp"-->
+<!--        android:background="@android:color/white"-->
+<!--        android:hint="Codigo da Sessão"-->
+<!--        android:inputType="textPassword"-->
+<!--        android:padding="10dp" />-->
 
     <Button
         android:id="@+id/btnRegister"

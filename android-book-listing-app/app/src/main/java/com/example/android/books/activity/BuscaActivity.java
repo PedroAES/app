@@ -20,6 +20,7 @@ import com.example.android.books.DAO.TokenDAO;
 import com.example.android.books.R;
 import com.example.android.books.model.Emprestimo;
 import com.example.android.books.model.Livro;
+import com.example.android.books.model.Sessao;
 import com.example.android.books.model.TokenAuthentication;
 import com.example.android.books.retrofit.RetrofitConfig;
 
@@ -39,6 +40,7 @@ public class BuscaActivity extends AppCompatActivity {
 		setContentView(R.layout.busca_activity);
 		userBusca = findViewById(R.id.entrada);
         tokenDAO = new TokenDAO( this);
+		logado = tokenDAO.getUsuarioLogado();
 		final ImageButton buscar = findViewById(R.id.btn_buscar);
 		userBusca.setOnEditorActionListener(new EditText.OnEditorActionListener() {
 			@Override
@@ -51,8 +53,11 @@ public class BuscaActivity extends AppCompatActivity {
 				return false;
 			}
 		});
+		final ImageButton listarEmprestimos = findViewById( R.id.btn_emprestimos );
+
         buscarLivros();
         emprestimosUsuario();
+		sessoes();
 	}
 
 	public void buscar(View view) {
@@ -68,11 +73,9 @@ public class BuscaActivity extends AppCompatActivity {
 			startActivity( i );
 
 		} else {
-			Toast.makeText(
-					BuscaActivity.this,
-					getString(R.string.enter_text),
-					Toast.LENGTH_SHORT)
-					.show();
+		    Intent i = new Intent( this,ListarEmprestimosActivity.class );
+		    i.putExtra( "emprestimos", (Serializable) emprestimos );
+		    startActivity( i );
 		}
 	}
 
@@ -107,7 +110,9 @@ public class BuscaActivity extends AppCompatActivity {
 	}
 
 	public void cadastroLivro(View view){
-		startActivity(new Intent(this, CadastroLivroActivity.class));
+		Intent i = new Intent( this,CadastroLivroActivity.class );
+		i.putExtra( "sessoes", (Serializable) sessoes );
+		startActivity( i );
 	}
 
 	public void buscarLivros(){
@@ -138,13 +143,26 @@ public class BuscaActivity extends AppCompatActivity {
 			public void onResponse(Call<List<Emprestimo>> call, Response<List<Emprestimo>> response) {
 				if(response.isSuccessful()){
 					emprestimos = response.body();
-//					for(Emprestimo emprestimo: emprestimos)
-//						if(matricula.equalsIgnoreCase( emprestimo.getMatricula_usuario()))
-//							emprestimosUsuario.add( emprestimo );
 				}
 			}
 			@Override
 			public void onFailure(Call<List<Emprestimo>> call, Throwable t) {
+				Log.e( "Token   ", "Erro ao buscar o token:" + t.getMessage() );
+			}
+		} );
+	}
+
+	public void sessoes(){
+		Call<List<Sessao>> call = new RetrofitConfig().getLivroService().getSessoes( "Token " + logado.getToken() );
+		call.enqueue( new Callback<List<Sessao>>() {
+			@Override
+			public void onResponse(Call<List<Sessao>> call, Response<List<Sessao>> response) {
+				if(response.isSuccessful())
+					sessoes = response.body();
+			}
+
+			@Override
+			public void onFailure(Call<List<Sessao>> call, Throwable t) {
 				Log.e( "Token   ", "Erro ao buscar o token:" + t.getMessage() );
 			}
 		} );
@@ -157,4 +175,6 @@ public class BuscaActivity extends AppCompatActivity {
 	private List<Emprestimo> emprestimos;
     private List<Emprestimo> emprestimosUsuario= new ArrayList<>(  );
 	private String matricula;
+	private TokenAuthentication logado;
+	private List<Sessao> sessoes = new ArrayList<>(  );
 }

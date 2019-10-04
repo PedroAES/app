@@ -8,6 +8,7 @@ import android.view.WindowManager;
 import android.widget.EditText;
 
 import com.example.android.books.R;
+import com.example.android.books.model.Livro;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -17,7 +18,6 @@ public class CadastroActivity extends AppCompatActivity {
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.cadastro_activity);
-
         etNome = findViewById(R.id.nome);
         etEmail = findViewById(R.id.email);
         etEndereco = findViewById(R.id.endereco);
