@@ -169,6 +169,10 @@ public class BuscaActivity extends AppCompatActivity {
 			}
 		} );
 	}
+	
+	public void sair(View view){
+		//sai e remove credenciais
+	}
 
 	private EditText userBusca;
     private TokenDAO tokenDAO;
