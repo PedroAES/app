@@ -3,12 +3,22 @@ package com.example.android.books.activity;
 import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.example.android.books.R;
 import com.example.android.books.model.Livro;
+import com.example.android.books.model.Usuario;
+import com.example.android.books.retrofit.RetrofitConfig;
+
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class CadastroActivity extends AppCompatActivity {
 
@@ -39,12 +49,14 @@ public class CadastroActivity extends AppCompatActivity {
         senha = etSenha.getText().toString().trim();
 
         if (validarCampos()) {
+            usuario = new Usuario( nome,senha,email,matricula,endereco,telefone );
             efetuarRegistro();
         }
     }
 
     private void efetuarRegistro(){
-        telaDeCarregamento();
+        cadastroUsuario();
+        //telaDeCarregamento();
     }
 
     private boolean validarCampos() {
@@ -98,6 +110,24 @@ public class CadastroActivity extends AppCompatActivity {
         pDialog.show();
     }
 
+    public void cadastroUsuario(){
+        Call<Usuario> call= new RetrofitConfig().getLivroService().addUsuarios( usuario );
+        call.enqueue( new Callback<Usuario>() {
+            @Override
+            public void onResponse(Call<Usuario> call, Response<Usuario> response) {
+                if(response.isSuccessful())
+                    Toast.makeText( getBaseContext(),"Usuário cadastrado com sucesso!", Toast.LENGTH_SHORT ).show();
+                else
+                    Toast.makeText( getBaseContext(),"Erro no cadastro!", Toast.LENGTH_SHORT ).show();
+            }
+
+            @Override
+            public void onFailure(Call<Usuario> call, Throwable t) {
+                Log.e("Livros ", "Erro na conexão:" + t.getMessage());
+            }
+        } );
+    }
+
     private EditText etNome;
     private EditText etEmail;
     private EditText etMatricula;
@@ -111,4 +141,5 @@ public class CadastroActivity extends AppCompatActivity {
     private String telefone;
     private String senha;
     private ProgressDialog pDialog;
+    private Usuario usuario;
 }

@@ -55,20 +55,26 @@ public class BuscaActivity extends AppCompatActivity {
 		});
 		final ImageButton listarEmprestimos = findViewById( R.id.btn_emprestimos );
 
-        buscarLivros();
-        emprestimosUsuario();
 		sessoes();
 	}
 
-	public void buscar(View view) {
-		EditText entrada = findViewById(R.id.entrada);
-		String input = entrada.getText().toString();
+    @Override
+    protected void onStart() {
+        super.onStart();
+        buscarLivros();
+        emprestimosUsuario();
+    }
 
-		if (!input.isEmpty()) {
+    public void buscar(View view) {
+//		EditText entrada = findViewById(R.id.entrada);
+//		String input = entrada.getText().toString();
+		int id = view.getId();
+
+		if (id == R.id.btn_buscar) {
 			String titulo = userBusca.getText().toString();
 			Intent i = new Intent( this, ListarLivrosActivity.class );
 			i.putExtra( "titulo", titulo );
-			i.putExtra( "lista", (Serializable) teste );
+			i.putExtra( "lista", (Serializable) livros );
 			i.putExtra("emprestimos", (Serializable) emprestimos);
 			startActivity( i );
 
@@ -121,10 +127,8 @@ public class BuscaActivity extends AppCompatActivity {
 		call.enqueue(new Callback<List<Livro>>() {
 			@Override
 			public void onResponse(Call<List<Livro>> call, Response<List<Livro>> response) {
-				if(response.isSuccessful()){
-					List<Livro> livros_api = response.body();
-					teste = livros_api;
-				}
+				if(response.isSuccessful())
+                    livros = response.body();
 			}
 
 			@Override
@@ -141,9 +145,8 @@ public class BuscaActivity extends AppCompatActivity {
 		call.enqueue( new Callback<List<Emprestimo>>() {
 			@Override
 			public void onResponse(Call<List<Emprestimo>> call, Response<List<Emprestimo>> response) {
-				if(response.isSuccessful()){
+				if(response.isSuccessful())
 					emprestimos = response.body();
-				}
 			}
 			@Override
 			public void onFailure(Call<List<Emprestimo>> call, Throwable t) {
@@ -160,7 +163,6 @@ public class BuscaActivity extends AppCompatActivity {
 				if(response.isSuccessful())
 					sessoes = response.body();
 			}
-
 			@Override
 			public void onFailure(Call<List<Sessao>> call, Throwable t) {
 				Log.e( "Token   ", "Erro ao buscar o token:" + t.getMessage() );
@@ -170,7 +172,7 @@ public class BuscaActivity extends AppCompatActivity {
 
 	private EditText userBusca;
     private TokenDAO tokenDAO;
-    private List<Livro> teste;
+    private List<Livro> livros;
     private Emprestimo emprestimo;
 	private List<Emprestimo> emprestimos;
     private List<Emprestimo> emprestimosUsuario= new ArrayList<>(  );

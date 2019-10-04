@@ -76,8 +76,8 @@ public class CadastroLivroActivity extends AppCompatActivity {
     }
 
     private void efetuarCadastro(){
-        //telaDeCarregamento();
         cadastrarLivroPost();
+        //telaDeCarregamento(); cai em um loop infinito
     }
 
     private void telaDeCarregamento() {
@@ -131,7 +131,7 @@ public class CadastroLivroActivity extends AppCompatActivity {
 
             @Override
             public void onFailure(Call<Livro> call, Throwable t) {
-                Log.e( "Token   ", "Erro ao buscar o token:" + t.getMessage() );
+                Log.e("Livros ", "Erro na conexão:" + t.getMessage());
             }
         } );
     }

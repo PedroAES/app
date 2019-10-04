@@ -51,7 +51,7 @@
         android:layout_margin="5dp"
         android:background="@android:color/white"
         android:hint="Matricula"
-        android:inputType="textPassword"
+        android:inputType="textPersonName"
         android:padding="10dp" />
 
 
@@ -62,7 +62,7 @@
         android:layout_margin="5dp"
         android:background="@android:color/white"
         android:hint="Endereco"
-        android:inputType="textPassword"
+        android:inputType="textPersonName"
         android:padding="10dp" />
 
     <EditText
@@ -72,7 +72,7 @@
         android:layout_margin="5dp"
         android:background="@android:color/white"
         android:hint="Telefone"
-        android:inputType="textPassword"
+        android:inputType="textPersonName"
         android:padding="10dp" />
 
     <EditText
