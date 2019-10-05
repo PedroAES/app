@@ -8,7 +8,7 @@
     android:gravity="center"
     android:orientation="vertical"
     android:padding="50dp"
-    tools:context="com.example.android.books.activity.CadastroActivity">
+    tools:context="com.example.android.livros.activity.CadastroActivity">
 
 
     <TextView

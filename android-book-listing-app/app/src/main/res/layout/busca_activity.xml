@@ -7,7 +7,7 @@
     android:background="@drawable/fundol"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.android.books.activity.BuscaActivity">
+    tools:context="com.example.android.livros.activity.BuscaActivity">
     
     <ImageButton
         android:id="@+id/sair"
